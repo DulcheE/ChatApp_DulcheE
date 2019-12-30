@@ -11,6 +11,8 @@ namespace ServerSide
     class ServerTopicListener
     {
         private Topic _topic;
+        private User _user;
+
         private TcpClient _connection;
         private ServerTopic _serverSource;
 
@@ -29,21 +31,13 @@ namespace ServerSide
 
 
 
-        public ServerTopicListener(Topic topic, TcpClient connection, ServerTopic topicServer )
+        public ServerTopicListener(Topic topic, TcpClient connection, ServerTopic topicServer)
         {
             this._topic = topic;
+            this._user = null;
+
             this._connection = connection;
             this._serverSource = topicServer;
-
-            if(_serverSource != null)
-            {
-                _serverSource.eventSender.TopicSender += this.OnMessageSendedTopic;
-                Net.SendServerCommunication(connection.GetStream(), new TopicMessages(MessageService.getAllByTopic(topic)));
-            }
-            else
-            {
-                Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Error no server source detected");
-            }
         }
 
 
@@ -64,8 +58,13 @@ namespace ServerSide
                     Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Wainting Communication...\n");
                     ClientCommunication request = Net.RecieveClientCommunication(this._connection.GetStream());
 
-                    //On créer un nouveau thread qui gère la ressource et on continue d'écouter
-                    HandlingRequest(request);
+                    //On gère la ressource et on continue d'écouter
+                    if (request is Identification)
+                        HandlingIdentification( (Identification)request);
+                    else if (this._user != null)
+                        HandlingRequest(request);
+                    else
+                        Net.SendServerCommunication(this._connection.GetStream(), new Response(request, new SecurityException("Identify yourself to the ServerTopicListener first !")));
                 }
             }
             catch (System.IO.IOException e)
@@ -86,77 +85,104 @@ namespace ServerSide
 
         }
 
-        private void HandlingRequest(Communication.CommunicationStream request)
+        private void HandlingRequest(ClientCommunication request)
         {
             Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Communication recieve :");
             Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] [");
 
-            switch (request)
+            try
             {
-                case SendMessage m:
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Type of Communication is Message");
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`]");
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] " + m);
+                switch (request)
+                {
+                    case SendMessage m:
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Type of Communication is Message");
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`]");
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] " + m);
 
-                    HandlingMessage(m);
+                        HandlingMessage(m);
 
-                    break;
-
-
-                case Leave l:
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Type of Communication is Leave");
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`]");
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] " + l);
-
-                    HandlingLeave(l);
-
-                    break;
+                        break;
 
 
-                case Delete d:
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Type of Communication is Delete");
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`]");
-                    Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] " + d);
+                    case Leave l:
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Type of Communication is Leave");
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`]");
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] " + l);
 
-                    HandlingDelete(d);
+                        HandlingLeave(l);
 
-                    break;
+                        break;
+
+
+                    case Delete d:
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] Type of Communication is Delete");
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`]");
+                        Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] " + d);
+
+                        HandlingDelete(d);
+
+                        break;
+                }
             }
-
+            catch(CommunicationException ce)
+            {
+                Net.SendServerCommunication(this._connection.GetStream(), new Response(request, ce));
+            }
 
             Console.WriteLine("[TopicListener `" + this._topic.Topic_name + "`] ]");
         }
 
         private void HandlingMessage(SendMessage m)
         {
+            Security.TestUser((User)m.Source, this._user);
+
             Response r = new Response(m, MessageService.add(m));
             _serverSource.eventSender.OnSendMessageIntopic(this, r);
         }
 
         private void HandlingLeave(Leave l)
         {
-            Net.SendServerCommunication(this._connection.GetStream(), new Response(l, new Success("Au revoir vous quittez le topic")) );
+            Security.TestUser(l.User, this._user);
 
-            Database.TopicService.leave(l);
+            _serverSource.SendMessageToClients("User `" + this._user.Username + "` leave the topic !");
+
+            Net.SendServerCommunication(this._connection.GetStream(), new Response(l, new Success("Au revoir, vous quittez le topic")) );
+
+            TopicService.leave(l);
 
             this._serverSource.serverTopicListeners.Remove(this._connection);
 
             this.Terminate();
         }
 
-        private void HandlingDelete(Delete dl)
+        private void HandlingDelete(Delete d)
         {
-            if(dl.Owner.Username == dl.Topic.Owner.Username)
-            {
-                Database.TopicService.delete(this._topic);
-                Net.SendServerCommunication(this._connection.GetStream(), new Response(dl, new Success("delete of topic success\n")));
+            //Test if i'm connected as the owner
+            Security.TestUser(d.Owner, this._user);
 
-                this._serverSource.KillThreads();
+            //Test if the owner is really the owner of the topic
+            Security.TestOwner(d.Owner, d.Topic);
+
+            TopicService.delete(this._topic);
+            Net.SendServerCommunication(this._connection.GetStream(), new Response(d, new Success("Delete of topic success")));
+
+            this._serverSource.KillThreads();
+        }
+
+        private void HandlingIdentification(Identification i)
+        {
+            if (this._topic.Topic_name.Equals(i.topic_name))
+            {
+                this._user = i.user;
+
+                _serverSource.eventSender.TopicSender += this.OnMessageSendedTopic;
+                Net.SendServerCommunication(this._connection.GetStream(), new Response(i, MessageService.getAllByTopic(this._topic)));
             }
             else
             {
-                Net.SendServerCommunication(this._connection.GetStream(), new Response(dl, new UserNotOwnerOfTopicException("The User `" + dl.Owner.Username + "` is not the owner of the Topic `" + dl.Topic.Topic_name + "` !")));
+                Net.SendServerCommunication(this._connection.GetStream(), new Response(i, new SecurityException("Failure to identified to the ServerTopicListener !")));
             }
+
         }
 
         public void OnMessageSendedTopic(Object source, Response r)
@@ -166,7 +192,7 @@ namespace ServerSide
             {
                 if (r != null && r.Content is Message)
                 {
-                    Net.SendServerCommunication(_connection.GetStream(), r);
+                    Net.SendServerCommunication(this._connection.GetStream(), r);
                 }
                 else
                 {

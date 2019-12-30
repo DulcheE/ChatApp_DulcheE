@@ -11,6 +11,8 @@ namespace Communication.Models
         private string _Password;
         private string _Email;
 
+        private uint _Cookie;
+
         public string Username => _Username;
         public string Password
         {
@@ -28,6 +30,14 @@ namespace Communication.Models
                 this._Email = value;
             }
         }
+        public uint Cookie
+        {
+            get => _Cookie;
+            set
+            {
+                this._Cookie = value;
+            }
+        }
 
 
         public User(string Username, string Password, string Email)
@@ -35,6 +45,9 @@ namespace Communication.Models
             this._Username = Username;
             this._Password = Password;
             this._Email = Email;
+
+            //No cookie
+            this._Cookie = 0;
         }
 
         public User(SignIn inscription)
@@ -42,6 +55,18 @@ namespace Communication.Models
             this._Username = inscription.Username;
             this._Password = inscription.Password;
             this._Email = inscription.Email;
+
+            //No cookie
+            this._Cookie = 0;
+        }
+
+
+        public User(string Username, string Password, string Email, uint Cookie)
+        {
+            this._Username = Username;
+            this._Password = Password;
+            this._Email = Email;
+            this._Cookie = Cookie;
         }
 
     }
@@ -99,10 +124,7 @@ namespace Communication.Models
 
 
     [Serializable]
-    public abstract class Entity
-    {
-
-    }
+    public abstract class Entity { }
 
 
     [Serializable]

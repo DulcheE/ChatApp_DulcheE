@@ -126,17 +126,27 @@ namespace Communication.Models
 
     }
 
+
     [Serializable]
     public class NoUserConnectedException : CommunicationException
     {
-        public NoUserConnectedException() : base()
-        {
-
-        }
+        public NoUserConnectedException() : base() { }
 
         public NoUserConnectedException(string message) : base(message) { }
 
         protected NoUserConnectedException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+
+    [Serializable]
+    public class SecurityException : CommunicationException
+    {
+        public SecurityException() : base() { }
+
+        public SecurityException(string message) : base(message) { }
+
+        protected SecurityException(System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }

@@ -14,7 +14,7 @@ namespace ServerSide
         private int port;
 
         private List<ServerListener> _serverListeners;
-        private Dictionary<string, ServerTopic> _serverTopics;
+        public Dictionary<string, ServerTopic> _serverTopics;
 
         public Server(int port)
         {
@@ -39,6 +39,7 @@ namespace ServerSide
             foreach(KeyValuePair<string, Topic> topic in topics)
             {
                 ServerTopic topicServer = new ServerTopic(topic.Value);
+                this._serverTopics.Add(topic.Key, topicServer);
                 new Thread(topicServer.start).Start();
             }
 
@@ -47,7 +48,7 @@ namespace ServerSide
                 TcpClient connection = _listener.AcceptTcpClient();
 
                 Console.WriteLine("connection etablie avec : " + connection.Client.RemoteEndPoint);
-                ServerListener listener = new ServerListener(connection);
+                ServerListener listener = new ServerListener(this, connection);
                 this._serverListeners.Add(listener);
 
                 new Thread(listener.HandlingConnection).Start();
@@ -56,9 +57,7 @@ namespace ServerSide
         }
 
 
-
-
-        public void SendMessageToTopic(Topic topic, string message)
+        public void messageToTopic(Topic topic, string message)
         {
             this._serverTopics[topic.Topic_name].SendMessageToClients(message);
         }

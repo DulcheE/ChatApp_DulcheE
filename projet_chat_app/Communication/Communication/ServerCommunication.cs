@@ -130,18 +130,4 @@ namespace Communication
 
     }
 
-
-    [Serializable]
-    public class TopicMessages : ServerCommunication
-    {
-        private Dictionary<long, Message> _Messages;
-
-        public Dictionary<long, Message> messages => this._Messages;
-
-        public TopicMessages(Dictionary<long, Message> Messages)
-        {
-            _Messages = Messages;
-        }
-
-    }
 }

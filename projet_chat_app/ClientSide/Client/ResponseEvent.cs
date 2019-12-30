@@ -121,6 +121,14 @@ namespace ClientSide
                         break;
 
 
+                    case Identification i:
+                        ConsoleManager.TrackWriteLine(ConsoleColor.White, "Type of Communication is Identification\n");
+
+                        OnResponseToIdentification(source, received);
+
+                        break;
+
+
                     default:
                         ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, "Type of Communication is unknown\n");
 
@@ -148,7 +156,7 @@ namespace ClientSide
 
                     //Si la réponse est bien un Initializer, alors le login s'est bien effectué
                     source.User = init.User;
-                    source.TopicsPublic = new Dictionary<string, ClientTopic>();
+                    source.Topics = new Dictionary<string, ClientTopic>();
 
                     foreach (KeyValuePair<string, Topic> topic in init.TopicsPublic)
                     {
@@ -212,7 +220,9 @@ namespace ClientSide
             {
                 case Success s:
 
-                    source.TopicsPublic[((Leave)response.Request).Topic.Topic_name].KillThread();
+                    //We tried to kill the thread, he may be already terminated when the server close the connection
+                    if(source.Topics.ContainsKey(((Leave)response.Request).Topic.Topic_name))
+                        source.Topics[((Leave)response.Request).Topic.Topic_name].KillThread();
 
                     callback(s);
 
@@ -290,7 +300,9 @@ namespace ClientSide
             {
                 case Success s:
 
-                    source.TopicsPublic[((Delete)response.Request).Topic.Topic_name].KillThread();
+                    //We tried to kill the thread, he may be already terminated when the server close the connection
+                    if (source.Topics.ContainsKey(((Delete)response.Request).Topic.Topic_name))
+                        source.Topics[((Delete)response.Request).Topic.Topic_name].KillThread();
 
                     callback(s);
 
@@ -307,6 +319,43 @@ namespace ClientSide
                 default:
 
                     ConsoleManager.TrackWriteLine(ConsoleColor.Red, "Error while deleting the Topic : " + response);
+
+                    break;
+
+            }
+
+            this.callback(response.Content);
+        }
+
+
+
+        //Default event for the Identification
+        //Return Success if success
+        //Return CommunicationException if an error occur
+        private void OnResponseToIdentification(Client source, Response response)
+        {
+
+
+            //On écoute la réponse
+            switch (response.Content)
+            {
+                case Success s:
+
+                    callback(s);
+
+                    return;
+
+
+                case CommunicationException error:
+
+                    callback(error);
+
+                    return;
+
+
+                default:
+
+                    ConsoleManager.TrackWriteLine(ConsoleColor.Red, "Error while Identification to the Topic : " + response);
 
                     break;
 

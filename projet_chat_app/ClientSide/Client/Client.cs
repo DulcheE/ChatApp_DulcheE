@@ -19,14 +19,14 @@ namespace ClientSide
         private MenuManager IOThread;
 
         public User User;
-        public Dictionary<string, ClientTopic> TopicsPublic;
+        public Dictionary<string, ClientTopic> Topics;
 
         public Client(string hostname, int port)
         {
             this.hostname = hostname;
             this.port = port;
 
-            this.TopicsPublic = new Dictionary<string, ClientTopic>();
+            this.Topics = new Dictionary<string, ClientTopic>();
         }
 
 
@@ -62,7 +62,7 @@ namespace ClientSide
         public ClientTopic CreateClientTopic(Topic topic)
         {
             ClientTopic ct = new ClientTopic(this, topic);
-            this.TopicsPublic.Add(ct.Topic.Topic_name, ct);
+            this.Topics.Add(ct.Topic.Topic_name, ct);
 
             return ct;
         }
@@ -78,7 +78,7 @@ namespace ClientSide
             this.IOThread.Terminate();
             this.IOThread = null;
 
-            foreach(KeyValuePair<string, ClientTopic> clientTopic in this.TopicsPublic)
+            foreach(KeyValuePair<string, ClientTopic> clientTopic in this.Topics)
             {
                 clientTopic.Value.KillThread();
             }

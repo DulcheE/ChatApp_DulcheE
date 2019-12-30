@@ -72,12 +72,38 @@ namespace ServerSide
                         string password = File.ReadAllLines(dir_name + "/password.txt")[0];
                         string email = File.ReadAllLines(dir_name + "/email.txt")[0];
 
+                        if(File.Exists(dir_name + "/cookie.txt"))
+                        {
+                            uint cookie = uint.Parse(File.ReadAllLines(dir_name + "/cookie.txt")[0]);
+
+                            return new User(username, password, email, cookie);
+                        }
+
                         return new User(username, password, email);
                     }
                 }
 
 
                 throw new DataNotFoundException("User with the username `" + _username + "` was not found !");
+            }
+
+
+
+
+            public static void setCookie(ref User user)
+            {
+                Security.TestUser(user);
+
+                //random uint from 1 to 2 * int.MaxValue
+                uint random = (uint) new Random().Next(1, int.MaxValue) + (uint) new Random().Next(0, int.MaxValue);
+
+
+                Directory.CreateDirectory(BasePath + UserBasePath + user.Username);
+
+                File.WriteAllText(BasePath + UserBasePath + user.Username + "/cookie.txt", random.ToString());
+                Console.WriteLine("Write at file : {0}", BasePath + UserBasePath + user.Username + "/cookie.txt");
+
+                user.Cookie = random;
             }
 
 
@@ -184,7 +210,7 @@ namespace ServerSide
             }
 
 
-            public static Dictionary<string, Topic> getAll()
+            public static Dictionary<string, Topic> getAll(bool getPassword = false)
             {
                 Dictionary<string, Topic> topics = new Dictionary<string, Topic>();
 
@@ -204,8 +230,10 @@ namespace ServerSide
                 {
                     string topic_name = File.ReadAllLines(dir_name + "/topic_name.txt")[0];
                     string owner = File.ReadAllLines(dir_name + "/owner.txt")[0];
+
                     string password = "";
-                    if (File.ReadAllLines(dir_name + "/password.txt").Length > 0)
+                    //If I want to get the password and there is one
+                    if (getPassword && File.ReadAllLines(dir_name + "/password.txt").Length > 0)
                          password = File.ReadAllLines(dir_name + "/password.txt")[0];
 
                     int port = int.Parse(File.ReadAllLines(dir_name + "/port.txt")[0]);
@@ -219,7 +247,7 @@ namespace ServerSide
 
 
 
-            public static Topic getByTopic_name(string _topic_name)
+            public static Topic getByTopic_name(string _topic_name, bool getPassword = false)
             {
                 string[] dirs_name;
 
@@ -241,8 +269,10 @@ namespace ServerSide
                         //we found our User
                         string topic_name = File.ReadAllLines(dir_name + "/topic_name.txt")[0];
                         string owner = File.ReadAllLines(dir_name + "/owner.txt")[0];
+
                         string password = "";
-                        if (File.ReadAllLines(dir_name + "/password.txt").Length > 0)
+                        //If I want to get the password and there is one
+                        if (getPassword && File.ReadAllLines(dir_name + "/password.txt").Length > 0)
                             password = File.ReadAllLines(dir_name + "/password.txt")[0];
 
                         int port = int.Parse(File.ReadAllLines(dir_name + "/port.txt")[0]);
@@ -256,7 +286,7 @@ namespace ServerSide
             }
 
 
-            public static Dictionary<string, Topic> getByUser(User user)
+            public static Dictionary<string, Topic> getByUser(User user, bool getPassword = false)
             {
                 Dictionary<string, Topic> topics = new Dictionary<string, Topic>();
 
@@ -276,10 +306,12 @@ namespace ServerSide
                 {
                     if (File.Exists(dir_name + "/Join/" + user.Username + ".txt"))
                     {
-                        string topic_name = File.ReadAllLines(dir_name + "/topic_name.txt")[0];
                         string owner = File.ReadAllLines(dir_name + "/owner.txt")[0];
+                        string topic_name = File.ReadAllLines(dir_name + "/topic_name.txt")[0];
+
                         string password = "";
-                        if (File.ReadAllLines(dir_name + "/password.txt").Length > 0)
+                        //If I want to get the password and there is one
+                        if (getPassword && File.ReadAllLines(dir_name + "/password.txt").Length > 0)
                             password = File.ReadAllLines(dir_name + "/password.txt")[0];
 
                         int port = int.Parse(File.ReadAllLines(dir_name + "/port.txt")[0]);
@@ -414,7 +446,11 @@ namespace ServerSide
 
 
                 User user = UserService.getByUsername(_user.Username);
-                Topic topic = TopicService.getByTopic_name(_topic_name);
+                Topic topic = getByTopic_name(_topic_name);
+
+                topic.Password = password;
+
+                Security.TestTopic(topic);
 
                 string[] files_name;
 

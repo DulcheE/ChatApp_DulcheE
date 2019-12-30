@@ -7,15 +7,17 @@ using Communication;
 using System.Net.Sockets;
 using System.Threading;
 using static ServerSide.Database;
+using static ServerSide.Security;
 
 namespace ServerSide
 {
     class ServerListener
     {
-        private TcpClient connection;
+        private Server _server;
+        private TcpClient _connection;
 
-        private static Dictionary<string, TcpClient> DestPrive = new Dictionary<string, TcpClient>();
-        private User User;
+        private static Dictionary<string, TcpClient> _DestPrive = new Dictionary<string, TcpClient>();
+        private User _User;
 
         private bool _execution = true;
 
@@ -24,15 +26,16 @@ namespace ServerSide
         {
             this._execution = false;
 
-            this.connection.GetStream().Close();
-            this.connection.Close();
+            this._connection.GetStream().Close();
+            this._connection.Close();
 
             ServerEvents.MessageSender -= this.OnMessageSended;
         }
 
-        public ServerListener(TcpClient connection)
+        public ServerListener(Server server, TcpClient connection)
         {
-            this.connection = connection;
+            this._server = server;
+            this._connection = connection;
 
             ServerEvents.MessageSender += this.OnMessageSended;
         }
@@ -45,24 +48,24 @@ namespace ServerSide
                 while (_execution)
                 {
                     Console.WriteLine("Wainting Communication...\n");
-                    ClientCommunication request = Net.RecieveClientCommunication(this.connection.GetStream());
+                    ClientCommunication request = Net.RecieveClientCommunication(this._connection.GetStream());
 
-                    //On créer un nouveau thread qui gère la ressource et on continue d'écouter
+                    //On gère la ressource et on continue d'écouter
                     HandlingRequest(request);
                 }
             }
             catch (System.IO.IOException e)
             {
-                if (this.User != null)
-                    DestPrive.Remove(this.User.Username);
+                if (this._User != null)
+                    _DestPrive.Remove(this._User.Username);
 
                 Console.WriteLine("The connection to the client has ended !");
                 Console.WriteLine(e.Message);
             }
             catch(System.Runtime.Serialization.SerializationException e)
             {
-                if (this.User != null)
-                    DestPrive.Remove(this.User.Username);
+                if (this._User != null)
+                    _DestPrive.Remove(this._User.Username);
 
                 Console.WriteLine("The connection to the client has ended !");
                 Console.WriteLine(e.Message);
@@ -157,7 +160,7 @@ namespace ServerSide
             catch (CommunicationException e)
             {
                 Console.WriteLine(e.Message);
-                Net.SendServerCommunication(this.connection.GetStream(), new Response(request, e));
+                Net.SendServerCommunication(this._connection.GetStream(), new Response(request, e));
             }
 
             Console.WriteLine("]\n");
@@ -168,7 +171,7 @@ namespace ServerSide
         {
 
             List<string> users = new List<string>();
-            foreach(KeyValuePair<string,TcpClient> client in DestPrive)
+            foreach(KeyValuePair<string,TcpClient> client in _DestPrive)
             {
                 if (client.Key.Equals(ask.asker.Username) == false)
                 {
@@ -182,7 +185,7 @@ namespace ServerSide
             }
 
 
-            Net.SendServerCommunication(connection.GetStream(), new Response(ask, users));
+            Net.SendServerCommunication(_connection.GetStream(), new Response(ask, users));
 
         }
 
@@ -191,7 +194,9 @@ namespace ServerSide
 
             if (m.Dest is User)
             {
-                Net.SendClientCommunication(DestPrive[((User)m.Dest).Username].GetStream(), m);
+                Security.TestUser((User)m.Dest);
+
+                Net.SendClientCommunication(_DestPrive[((User)m.Dest).Username].GetStream(), m);
             }
             else
             {
@@ -206,21 +211,21 @@ namespace ServerSide
             Console.WriteLine(li);
 
 
-            this.User = Database.UserService.getByUsername(li.Username);
+            this._User = Database.UserService.getByUsername(li.Username);
 
-            if (this.User.Password != li.Password)
-            {
-                throw new InvalidCredentialsException("Wrong password for the User `" + li.Username + "` !");
-            }
+            UserService.setCookie(ref this._User);
 
 
-            Console.WriteLine("Login succeed !\n");
+            Console.WriteLine("Login succeed !\nCookie is : {0}\n", this._User.Cookie);
 
-            DestPrive.Add(this.User.Username, this.connection);
+            if (_DestPrive.ContainsKey(this._User.Username))
+                _DestPrive[this._User.Username] = this._connection;
+            else
+                _DestPrive.Add(this._User.Username, this._connection);
 
-            Initializer init = new Initializer(TopicService.getByUser(this.User), new Dictionary<string, Topic>(), this.User);
+            Initializer init = new Initializer(TopicService.getByUser(this._User), new Dictionary<string, Topic>(), this._User);
 
-            Net.SendServerCommunication(this.connection.GetStream(), new Response(li, init));
+            Net.SendServerCommunication(this._connection.GetStream(), new Response(li, init));
 
         }
 
@@ -233,7 +238,7 @@ namespace ServerSide
             User new_user = Database.UserService.add(si);
 
             Console.WriteLine("New User `" + new_user.Username + " created !\n");
-            Net.SendServerCommunication(this.connection.GetStream(), new Response(si, new Success("New User `" + new_user.Username + " created !")));
+            Net.SendServerCommunication(this._connection.GetStream(), new Response(si, new Success("New User `" + new_user.Username + " created !")));
         }
 
 
@@ -241,22 +246,16 @@ namespace ServerSide
         {
             Console.WriteLine(j);
 
-            if (Database.TopicService.join(j))
-            {
-                Console.WriteLine("User " + j.User.Username + " join the Topic " + j.Topic_name + " !\n");
-                //TopicEventManager.topics[j.Topic.Topic_name].TopicSender += this.OnMessageSended;
-                Console.WriteLine("sending response about joining topic");
+            TopicService.join(j);
 
-                Topic topic = TopicService.getByTopic_name(j.Topic_name);
+            Console.WriteLine("User " + j.User.Username + " join the Topic " + j.Topic_name + " !\n");
 
-                Net.SendServerCommunication(this.connection.GetStream(), new Response(j, topic));
-            }
-            else
-            {
-                Console.WriteLine("Failed to join the topic !\n");
-                Net.SendServerCommunication(this.connection.GetStream(), new Response(j, new Error(new Exception("Failed to join the topic !"))));
-            }
 
+            Topic topic = TopicService.getByTopic_name(j.Topic_name);
+
+            Net.SendServerCommunication(this._connection.GetStream(), new Response(j, topic));
+
+            this._server.messageToTopic(topic, "The User `" + j.User.Username + "` join the topic !");
         }
 
 
@@ -271,20 +270,21 @@ namespace ServerSide
         {
             Console.WriteLine(c);
 
-            Topic new_topic = Database.TopicService.add(c);
+            Topic new_topic = TopicService.add(c);
             if (new_topic == null)
             {
                 Console.WriteLine("Failed to create new Topic !\n");
-                Net.SendServerCommunication(this.connection.GetStream(), new Response(c, new Error(new Exception("Failed to create new Topic !"))));
+                Net.SendServerCommunication(this._connection.GetStream(), new Response(c, new Error(new Exception("Failed to create new Topic !"))));
             }
             else
             {
                 Console.WriteLine("New Topic `" + new_topic.Topic_name + "` created !\n");
-                Net.SendServerCommunication(this.connection.GetStream(), new Response(c, new_topic));
+                Net.SendServerCommunication(this._connection.GetStream(), new Response(c, new_topic));
 
 
                 Console.WriteLine("Creating new TopicServer for `" + new_topic.Topic_name + "` !\n");
                 ServerTopic topicServer = new ServerTopic(new_topic);
+                this._server._serverTopics.Add(new_topic.Topic_name, topicServer);
                 new Thread(topicServer.start).Start();
             }
 
@@ -318,7 +318,7 @@ namespace ServerSide
                 if (m != null)
                 {
                     Console.WriteLine("appel de send com");
-                    Net.SendServerCommunication(connection.GetStream(), new Response(m, null));
+                    Net.SendServerCommunication(_connection.GetStream(), new Response(m, null));
                 }
                 else
                 {

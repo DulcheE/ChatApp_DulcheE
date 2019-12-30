@@ -350,17 +350,14 @@ namespace Communication
     {
         private User _Owner;
         private Topic _Topic;
-        private string _Password;
 
         public User Owner => this._Owner;
         public Topic Topic => this._Topic;
-        public string Password => this._Password;
 
-        public Delete(User Owner, Topic Topic, string Password) : base()
+        public Delete(User Owner, Topic Topic) : base()
         {
             this._Topic = Topic;
             this._Owner = Owner;
-            this._Password = Password;
         }
 
 
@@ -372,7 +369,7 @@ namespace Communication
                 return "Topic must be not null !";
 
 
-            string str = "Attempt for the User `" + Owner.Username + "` to delete the Topic `" + Topic.Topic_name + "`\nPassword : `" + Password + "`";
+            string str = "Attempt for the User `" + Owner.Username + "` to delete the Topic `" + Topic.Topic_name + "`";
 
             return str;
         }
@@ -408,14 +405,9 @@ namespace Communication
         public List<User> userConnected => users;
         public User asker => _asker;
 
-        public AskConnectUser(User asker)
+        public AskConnectUser(User asker) : base()
         {
             _asker = asker;
-        }
-
-        public AskConnectUser(List<User> user)
-        {
-            users = user;
         }
 
 
@@ -444,4 +436,48 @@ namespace Communication
 
 
     }
+
+
+    [Serializable]
+    public class Identification : ClientCommunication
+    {
+        private User _user;
+        private string _topic_name;
+
+        public User user => _user;
+        public string topic_name => _topic_name;
+
+
+        public Identification(User user, string topic_name) : base()
+        {
+            this._user = user;
+            this._topic_name = topic_name;
+        }
+
+
+        public override string ToString() => "Attempt for the User `" + user.Username + "` to identify itself to the Topic `" + topic_name + "`";
+
+
+
+        public override bool Equals(object obj)
+        {
+            switch (obj)
+            {
+                case Identification i:
+
+                    if (i.creation_date.Ticks == this.creation_date.Ticks && i.ToString().Equals(this.ToString()))
+                        return true;
+
+                    return false;
+
+
+                default:
+
+                    return false;
+
+            }
+        }
+
+    }
+
 }

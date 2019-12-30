@@ -43,6 +43,9 @@ namespace ClientSide
         {
             try
             {
+                //We identify ourself to the ServerTopicListener
+                Net.SendClientCommunication(this.comm.GetStream(), new Identification(this.client.User, this.topic.Topic_name));
+
                 while (!terminate)
                 {
                     ConsoleManager.TrackWriteLine(ConsoleColor.White, "[" + Thread.CurrentThread.Name + "]  Wainting Communication...\n");
@@ -53,18 +56,22 @@ namespace ClientSide
             }
             catch (System.IO.IOException e)
             {
-                this.client.TopicsPublic.Remove(this.topic.Topic_name);
-
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, "[" + Thread.CurrentThread.Name + "] The connection to the server has ended !");
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, e.Message);
             }
             catch(System.Runtime.Serialization.SerializationException e)
             {
-                this.client.TopicsPublic.Remove(this.topic.Topic_name);
-
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, "[" + Thread.CurrentThread.Name + "] The connection to the server has ended !");
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, e.Message);
             }
+            finally
+            {
+                if (this.client.Topics.ContainsKey(this.topic.Topic_name))
+                {
+                    this.client.Topics.Remove(this.topic.Topic_name);
+                }
+            }
+
         }
 
 
@@ -79,13 +86,6 @@ namespace ClientSide
                 case Response r:
 
                     this.HandlingResponse(r);
-
-                    break;
-
-
-                case TopicMessages tm:
-
-                    this.HanglingTopicMessages(tm);
 
                     break;
 
@@ -105,13 +105,24 @@ namespace ClientSide
         private void HandlingResponse(Response response)
         {
 
-            ResponseEvent.SendResponseEvent(this.client, response);
+            ResponseEvent.WriteBufferResponse(response);
 
             switch (response.Request)
             {
                 case SendMessage m:
 
                     this.HandlingMessage(response.Content);
+
+                    break;
+
+
+                case Identification i:
+
+                    if(response.Content is Dictionary<long, Message>)
+                    {
+                        HandlingTopicMessages((Dictionary<long, Message>)response.Content);
+                    }
+                        
 
                     break;
 
@@ -125,19 +136,28 @@ namespace ClientSide
             switch (response)
             {
                 case Message m:
-                    ConsoleManager.TrackWriteLine(ConsoleColor.White, "[" + Thread.CurrentThread.Name + "] " + m.ToString());
+                    printMessage(m);
 
                     break;
             }
         }
 
-        private void HanglingTopicMessages(TopicMessages topicMessages) { 
+        private void HandlingTopicMessages(Dictionary<long, Message> topicMessages) { 
         
-            foreach(KeyValuePair<long, Message> message in topicMessages.messages)
+            foreach(KeyValuePair<long, Message> message in topicMessages)
             {
-                ConsoleManager.TrackWriteLine(ConsoleColor.Magenta, "[" + Thread.CurrentThread.Name + "] " + message.Value.ToString());
+                printMessage(message.Value);
             }
 
+        }
+
+
+        private void printMessage(Message message)
+        {
+            if (message.Source is Topic)
+                ConsoleManager.TrackWriteLine(ConsoleColor.DarkGray, "[" + Thread.CurrentThread.Name + "] " + message.ToString());
+            else
+                ConsoleManager.TrackWriteLine(ConsoleColor.Magenta, "[" + Thread.CurrentThread.Name + "] " + message.ToString());
         }
 
 

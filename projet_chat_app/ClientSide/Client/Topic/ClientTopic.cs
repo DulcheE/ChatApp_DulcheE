@@ -61,7 +61,8 @@ namespace ClientSide
 
         public void DeleteTopic(string password, Action<object> callback)
         {
-            Delete d = new Delete(this.client.User, this.Topic, password);
+            this.Topic.Password = password;
+            Delete d = new Delete(this.client.User, this.Topic);
             Net.SendClientCommunication(this.comm.GetStream(), d);
 
             ResponseEvent.MyResponseEvent += new ResponseEvent(d, callback).OnResponse;
@@ -72,7 +73,6 @@ namespace ClientSide
 
         public void KillThread()
         {
-            this.client.TopicsPublic.Remove(this.Topic.Topic_name);
             this.clientTopicListener.Terminate();
         }
 

@@ -372,7 +372,7 @@ namespace Front_Console
             Dictionary<int, string> topics_names = new Dictionary<int, string>();
             int i = 0;
 
-            foreach (KeyValuePair<string, ClientTopic> topic in _client.TopicsPublic)
+            foreach (KeyValuePair<string, ClientTopic> topic in _client.Topics)
             {
                 if (topic.Value.Topic.Owner.Username == this._client.User.Username)
                 {
@@ -392,7 +392,7 @@ namespace Front_Console
             int menu = ChoiceSelection.GetChoice(choice, (this._client.User == null) ? null : this._client.User.Username, null);
 
 
-            if (menu == this._client.TopicsPublic.Count)
+            if (menu == this._client.Topics.Count)
             {
 
                 HomeMenu();
@@ -460,7 +460,7 @@ namespace Front_Console
         {
             List<string> choices = new List<string>();
 
-            if(this._client.TopicsPublic[TopicName].Topic.Owner.Username == this._client.User.Username)
+            if(this._client.Topics[TopicName].Topic.Owner.Username == this._client.User.Username)
                 choices.Add("Delete the Topic");
             else
                 choices.Add("Leave the Topic");
@@ -479,7 +479,7 @@ namespace Front_Console
             {
                 case 0:
 
-                    if (this._client.TopicsPublic[TopicName].Topic.Owner.Username == this._client.User.Username)
+                    if (this._client.Topics[TopicName].Topic.Owner.Username == this._client.User.Username)
                     {
 
                         Console.Clear();
@@ -488,7 +488,7 @@ namespace Front_Console
                         string password = ConsoleManager.Read("Please enter the password of the Topic : ");
 
                         //We tried to delete the Topic
-                        this._client.TopicsPublic[TopicName].DeleteTopic(password, (response) =>
+                        this._client.Topics[TopicName].DeleteTopic(password, (response) =>
                         {
 
                             //On écoute la réponse
@@ -525,7 +525,7 @@ namespace Front_Console
                     {
 
                         //We tried to leave the Topic
-                        this._client.TopicsPublic[TopicName].LeaveTopic( (response) =>
+                        this._client.Topics[TopicName].LeaveTopic( (response) =>
                         {
 
                             //On écoute la réponse
@@ -569,9 +569,24 @@ namespace Front_Console
                     string message = ConsoleManager.Read("\nPlease, you can now enter messages to be sent to the Topic `" + TopicName + "` :");
 
                     ConsoleManager.TrackWriteLine(ConsoleColor.White, "Sending message to the server...\n");
-                    _client.TopicsPublic[TopicName].SendingMessage(message, (response) =>
+                    _client.Topics[TopicName].SendingMessage(message, (response) =>
                     {
-                        ConsoleManager.TrackWriteLine(ConsoleColor.Gray, "I received my own message from the server");
+
+                        switch (response)
+                        {
+                            case Success s:
+                                ConsoleManager.TrackWriteLine(ConsoleColor.Gray, "I received my own message from the server");
+
+                                break;
+
+
+                            case CommunicationException ce:
+                                ConsoleManager.TrackWriteLine(ConsoleColor.Red, ce.Message);
+
+                                break;
+
+                        }
+
                     });
 
                     TopicMenu(TopicName);

@@ -1,4 +1,5 @@
-﻿using Communication.Models;
+﻿using Communication;
+using Communication.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -15,7 +16,7 @@ namespace ServerSide
         private ServerTopicEvent Event;
 
         public Dictionary<TcpClient, ServerTopicListener> serverTopicListeners;
-        private Boolean _execute = true;
+        private bool _execute = true;
 
         public void KillThreads()
         {
@@ -69,7 +70,7 @@ namespace ServerSide
 
         public void SendMessageToClients(string message)
         {
-            this.eventSender.OnSendMessageIntopic(this, new Communication.Response(null, MessageService.addToTopic(this._topic, this._topic, message)));
+            this.eventSender.OnSendMessageIntopic(this, new Response(new SendMessage(this._topic, this._topic, message), MessageService.addToTopic(this._topic, this._topic, message)));
         }
 
     }
