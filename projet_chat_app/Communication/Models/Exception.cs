@@ -149,4 +149,16 @@ namespace Communication.Models
         protected SecurityException(System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
+
+
+    [Serializable]
+    public class ClientCredentialsInvalidException : SecurityException
+    {
+        public ClientCredentialsInvalidException() : base() { }
+
+        public ClientCredentialsInvalidException(string message) : base(message) { }
+
+        protected ClientCredentialsInvalidException(System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
 }

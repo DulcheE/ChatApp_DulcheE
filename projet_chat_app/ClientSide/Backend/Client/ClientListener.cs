@@ -9,63 +9,69 @@ using System.Threading;
 
 namespace ClientSide
 {
-    class ClientListener
+    //Listener part
+    public partial class Client
     {
-        private TcpClient connection;
-        private Client client;
-
         private bool terminate = false;
 
 
+        /// <summary>
+        /// Stop the Thread listening to the Server and close the connection
+        /// </summary>
         public void Terminate()
         {
             this.terminate = true;
 
-            if(this.client.User != null)
-                ConsoleManager.TrackWriteLine(ConsoleColor.Yellow, "[" + Thread.CurrentThread.Name + "] KILLING THREAD ClientListener " + this.client.User.Username);
+            if(this.User != null)
+                ConsoleManager.TrackWriteLine(ConsoleColor.Yellow, "[" + Thread.CurrentThread.Name + "] KILLING THREAD ClientListener " + this.User.Username);
 
-            this.connection.GetStream().Close();
-            this.connection.Close();
+            if (this._comm.Connected)
+            {
+                this._comm.GetStream().Close();
+                this._comm.Close();
+            }
         }
 
 
-
-        public ClientListener(TcpClient connection, Client client)
-        {
-            this.connection = connection;
-            this.client = client;
-        }
-
-
-        public void HandlingConnection()
+        /// <summary>
+        /// Listen any ServerCommunication from the connection to the server
+        /// </summary>
+        public void Listener()
         {
             try
             {
                 while (!terminate)
                 {
                     ConsoleManager.TrackWriteLine(ConsoleColor.White, "[" + Thread.CurrentThread.Name + "] Wainting Communication...\n");
-                    ServerCommunication communication = Net.RecieveServerCommunication(this.connection.GetStream());
+                    ServerCommunication communication = Net.RecieveServerCommunication(this._comm.GetStream());
 
-                    //On créer un nouveau thread qui gère la ressource et on continue d'écouter
-                    HandlingCommunication(communication);
+                    //On gère la ressource et on continue d'écouter
+                    HandlingServerCommunication(communication);
                 }
             }
             catch (System.IO.IOException e)
             {
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, "[" + Thread.CurrentThread.Name + "] The connection to the server has ended !");
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, e.Message);
+
+                KillClient();
             }
             catch (System.Runtime.Serialization.SerializationException e)
             {
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, "[" + Thread.CurrentThread.Name + "] The connection to the server has ended !");
                 ConsoleManager.TrackWriteLine(ConsoleColor.DarkRed, e.Message);
+
+                KillClient();
             }
         }
 
 
 
-
-        private void HandlingCommunication(Communication.CommunicationStream communication)
+        /// <summary>
+        /// Handle new Communication
+        /// </summary>
+        /// <param name="communication">ServerCommunication received from the Server</param>
+        private void HandlingServerCommunication(ServerCommunication communication)
         {
             ConsoleManager.TrackWriteLine(ConsoleColor.White, "[" + Thread.CurrentThread.Name + "] Communication recieve :\n[");
 
@@ -78,9 +84,9 @@ namespace ClientSide
                     break;
 
 
-                case SendMessage m:
+                case ApprouvedMessage am:
 
-                    this.HandlingSendMessage(m);
+                    this.HandlingApprouvedMessage(am);
 
                     break;
 
@@ -103,9 +109,9 @@ namespace ClientSide
         }
 
 
-        private void HandlingSendMessage(SendMessage m)
+        private void HandlingApprouvedMessage(ApprouvedMessage am)
         {
-            string str = "[" + Thread.CurrentThread.Name + "] The User `" + ((User)m.Source).Username + "` send you the folowing message : \n[\n" + m.Content + "\n]";
+            string str = "[" + Thread.CurrentThread.Name + "] Private message : [\n" + am.message.ToString() + "\n]";
             ConsoleManager.TrackWriteLine(ConsoleColor.Magenta, str);
         }
 

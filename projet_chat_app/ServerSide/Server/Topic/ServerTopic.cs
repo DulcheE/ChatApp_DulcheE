@@ -15,7 +15,7 @@ namespace ServerSide
 
         private ServerTopicEvent Event;
 
-        public Dictionary<TcpClient, ServerTopicListener> serverTopicListeners;
+        public Dictionary<TcpClient, ServerClientTopicListener> serverTopicListeners;
         private bool _execute = true;
 
         public void KillThreads()
@@ -23,7 +23,7 @@ namespace ServerSide
             Console.WriteLine("Attempt to kill all the Thread of the ServerTopicListener of the Topic `" + this._topic.Topic_name + "` !");
             _execute = false;
 
-            foreach (KeyValuePair<TcpClient, ServerTopicListener> stl in serverTopicListeners)
+            foreach (KeyValuePair<TcpClient, ServerClientTopicListener> stl in serverTopicListeners)
             {
                 stl.Value.Terminate();
             }
@@ -39,7 +39,7 @@ namespace ServerSide
         {
             this._topic = topic;
             this.Event = new ServerTopicEvent();
-            this.serverTopicListeners = new Dictionary<TcpClient, ServerTopicListener>();
+            this.serverTopicListeners = new Dictionary<TcpClient, ServerClientTopicListener>();
         }
 
 
@@ -58,7 +58,7 @@ namespace ServerSide
                 TcpClient connection = _listener.AcceptTcpClient();
 
                 Console.WriteLine("[TopicServer `" + this._topic.Topic_name + "`] Connection etablie avec : " + connection.Client.RemoteEndPoint + "`\n");
-                ServerTopicListener topicListener = new ServerTopicListener(_topic, connection, this);
+                ServerClientTopicListener topicListener = new ServerClientTopicListener(_topic, connection, this);
                 this.serverTopicListeners.Add(connection, topicListener);
 
                 new Thread(topicListener.HandlingConnection).Start();

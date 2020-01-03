@@ -46,15 +46,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Front-UI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Front-UI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Profile_Frame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Profile_Frame.Designer.cs">
+      <DependentUpon>Profile_Frame.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <Compile Include="Front-UI\UserCompenent\Topic_Frame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Topic_Frame.Designer.cs">
+      <DependentUpon>Topic_Frame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Topic_State_Frame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Topic_State_Frame.Designer.cs">
+      <DependentUpon>Topic_State_Frame.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Front-UI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -67,6 +85,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Front-UI\UserCompenent\Profile_Frame.resx">
+      <DependentUpon>Profile_Frame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front-UI\UserCompenent\Topic_Frame.resx">
+      <DependentUpon>Topic_Frame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front-UI\UserCompenent\Topic_State_Frame.resx">
+      <DependentUpon>Topic_State_Frame.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -81,25 +108,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OTTER.ico" />
+    <None Include="Front-UI\Resources\OTTER.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OTTER.png" />
+    <None Include="Front-UI\Resources\OTTER.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Border_Left.png" />
+    <None Include="Front-UI\Resources\Border_Left.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Border_Left1.png" />
+    <None Include="Front-UI\Resources\Border_Left1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Border_Right.png" />
+    <None Include="Front-UI\Resources\Border_Right.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Border_Right1.png" />
+    <None Include="Front-UI\Resources\Border_Right1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Border_Left2.png" />
+    <None Include="Front-UI\Resources\Border_Left2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

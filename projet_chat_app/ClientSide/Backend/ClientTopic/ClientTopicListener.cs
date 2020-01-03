@@ -9,47 +9,35 @@ using Front_Console;
 
 namespace ClientSide
 {
-    public class ClientTopicListener
+    public partial class ClientTopic
     {
-
-        private Topic topic;
-
-        private TcpClient comm;
-        private Client client;
-
         private bool terminate = false;
 
 
         public void Terminate()
         {
             this.terminate = true;
-            ConsoleManager.TrackWriteLine(ConsoleColor.Yellow, "[" + Thread.CurrentThread.Name + "] KILLING THREAD ClientTopicListener " + this.topic.Topic_name);
+            ConsoleManager.TrackWriteLine(ConsoleColor.Yellow, "[" + Thread.CurrentThread.Name + "] KILLING THREAD ClientTopicListener " + this.Topic.Topic_name);
 
-            this.comm.GetStream().Close();
-            this.comm.Close();
+            if (this._comm.Connected)
+            {
+                this._comm.GetStream().Close();
+                this._comm.Close();
+            }
         }
 
 
-        public ClientTopicListener(TcpClient comm, Client client, Topic Topic)
-        {
-            this.topic = Topic;
-
-            this.comm = comm;
-            this.client = client;
-        }
-
-
-        public void HandlingConnection()
+        public void Listener()
         {
             try
             {
                 //We identify ourself to the ServerTopicListener
-                Net.SendClientCommunication(this.comm.GetStream(), new Identification(this.client.User, this.topic.Topic_name));
+                Net.SendClientCommunication(this._comm.GetStream(), new Identification(this._client.User, this.Topic.Topic_name));
 
                 while (!terminate)
                 {
                     ConsoleManager.TrackWriteLine(ConsoleColor.White, "[" + Thread.CurrentThread.Name + "]  Wainting Communication...\n");
-                    ServerCommunication communication = Net.RecieveServerCommunication(this.comm.GetStream());
+                    ServerCommunication communication = Net.RecieveServerCommunication(this._comm.GetStream());
 
                     HandlingCommunication(communication);
                 }
@@ -66,9 +54,9 @@ namespace ClientSide
             }
             finally
             {
-                if (this.client.Topics.ContainsKey(this.topic.Topic_name))
+                if (this._client.Topics.ContainsKey(this.Topic.Topic_name))
                 {
-                    this.client.Topics.Remove(this.topic.Topic_name);
+                    this._client.Topics.Remove(this.Topic.Topic_name);
                 }
             }
 

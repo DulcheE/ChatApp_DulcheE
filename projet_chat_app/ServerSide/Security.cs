@@ -16,10 +16,10 @@ namespace ServerSide
             User db_user = UserService.getByUsername(user.Username);
 
             if (user.Password != db_user.Password)
-                throw new InvalidCredentialsException("The credentials of the User `" + user.Username + "` are invalid !");
+                throw new ClientCredentialsInvalidException("The credentials of the User `" + user.Username + "` are invalid !");
 
             if (user.Cookie != 0 && user.Cookie != db_user.Cookie)
-                throw new InvalidCredentialsException("Another user connect with your credentials !");
+                throw new ClientCredentialsInvalidException("Another user connect with your credentials !");
         }
 
 

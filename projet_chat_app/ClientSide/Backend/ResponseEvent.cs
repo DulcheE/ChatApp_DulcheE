@@ -20,7 +20,8 @@ namespace ClientSide
 
         public static void WriteBufferResponse(Response r)
         {
-            if(r != null)
+            ConsoleManager.TrackWriteLine(ConsoleColor.Cyan, "[" + Thread.CurrentThread.Name + "] Writting in the buffer...");
+            if (r != null)
                 BufferResponse.Add(r);
             sem.Release();
         }
@@ -28,6 +29,7 @@ namespace ClientSide
         public static Response ReadBufferResponse()
         {
             sem.WaitOne();
+            ConsoleManager.TrackWriteLine(ConsoleColor.Cyan, "[" + Thread.CurrentThread.Name + "] Read in the buffer...");
             Response r = BufferResponse[0];
             BufferResponse.RemoveAt(0);
 
@@ -62,6 +64,13 @@ namespace ClientSide
             if (this.request.Equals(received.Request))
             {
                 MyResponseEvent -= this.OnResponse;
+
+                ConsoleManager.TrackWriteLine(ConsoleColor.Cyan, received.Content.GetType().ToString());
+                if(!(received.Request is LogIn) && received.Content is ClientCredentialsInvalidException)
+                {
+                    ConsoleManager.TrackWriteLine(ConsoleColor.Red, ((ClientCredentialsInvalidException)received.Content).Message);
+                    source.Disconnect();
+                }
 
                 switch (received.Request)
                 {
@@ -155,13 +164,7 @@ namespace ClientSide
                 case Initializer init:
 
                     //Si la réponse est bien un Initializer, alors le login s'est bien effectué
-                    source.User = init.User;
-                    source.Topics = new Dictionary<string, ClientTopic>();
-
-                    foreach (KeyValuePair<string, Topic> topic in init.TopicsPublic)
-                    {
-                        source.CreateClientTopic(topic.Value);
-                    }
+                    source.Init(init);
 
 
                     callback(true);
@@ -199,10 +202,11 @@ namespace ClientSide
 
         private void OnResponseToJoin(Client source, Response response)
         {
-            if(response.Content.GetType() == typeof(Topic))
+            if(response.Content is Topic)
             {
                 source.CreateClientTopic((Topic)response.Content);
             }
+
             this.callback(response.Content);
         }
 
@@ -222,7 +226,7 @@ namespace ClientSide
 
                     //We tried to kill the thread, he may be already terminated when the server close the connection
                     if(source.Topics.ContainsKey(((Leave)response.Request).Topic.Topic_name))
-                        source.Topics[((Leave)response.Request).Topic.Topic_name].KillThread();
+                        source.Topics[((Leave)response.Request).Topic.Topic_name].Terminate();
 
                     callback(s);
 
@@ -302,7 +306,7 @@ namespace ClientSide
 
                     //We tried to kill the thread, he may be already terminated when the server close the connection
                     if (source.Topics.ContainsKey(((Delete)response.Request).Topic.Topic_name))
-                        source.Topics[((Delete)response.Request).Topic.Topic_name].KillThread();
+                        source.Topics[((Delete)response.Request).Topic.Topic_name].Terminate();
 
                     callback(s);
 

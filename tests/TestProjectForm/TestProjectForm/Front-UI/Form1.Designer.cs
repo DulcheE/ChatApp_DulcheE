@@ -31,8 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel_topic_list = new System.Windows.Forms.Panel();
+            this.topic_State_Frame1 = new TestProjectForm.UserCompenent.Topic_State_Frame();
+            this.profile_Frame1 = new TestProjectForm.Profile_Frame();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,7 +43,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel5.SuspendLayout();
@@ -70,7 +72,10 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.panel1.Controls.Add(this.panel_topic_list);
+            this.panel1.Controls.Add(this.topic_State_Frame1);
+            this.panel1.Controls.Add(this.profile_Frame1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 40);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
@@ -79,29 +84,47 @@
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // panel_topic_list
+            // 
+            this.panel_topic_list.AutoScroll = true;
+            this.panel_topic_list.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_topic_list.Location = new System.Drawing.Point(0, 77);
+            this.panel_topic_list.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_topic_list.Name = "panel_topic_list";
+            this.panel_topic_list.Size = new System.Drawing.Size(236, 442);
+            this.panel_topic_list.TabIndex = 10;
+            // 
+            // topic_State_Frame1
+            // 
+            this.topic_State_Frame1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.topic_State_Frame1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.topic_State_Frame1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.topic_State_Frame1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.topic_State_Frame1.Location = new System.Drawing.Point(0, 519);
+            this.topic_State_Frame1.Name = "topic_State_Frame1";
+            this.topic_State_Frame1.Size = new System.Drawing.Size(236, 77);
+            this.topic_State_Frame1.TabIndex = 9;
+            // 
+            // profile_Frame1
+            // 
+            this.profile_Frame1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.profile_Frame1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.profile_Frame1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.profile_Frame1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.profile_Frame1.Location = new System.Drawing.Point(0, 0);
+            this.profile_Frame1.Name = "profile_Frame1";
+            this.profile_Frame1.Size = new System.Drawing.Size(236, 77);
+            this.profile_Frame1.TabIndex = 8;
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel2.Controls.Add(this.splitter1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(236, 40);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(710, 596);
             this.panel2.TabIndex = 1;
-            // 
-            // splitter1
-            // 
-            this.splitter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitter1.Location = new System.Drawing.Point(0, 0);
-            this.splitter1.Margin = new System.Windows.Forms.Padding(0);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 596);
-            this.splitter1.TabIndex = 0;
-            this.splitter1.TabStop = false;
-            this.splitter1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Splitter1_MouseDown);
-            this.splitter1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Splitter1_MouseMove);
-            this.splitter1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Splitter1_MouseUp);
             // 
             // panel3
             // 
@@ -226,7 +249,7 @@
             this.TransparencyKey = System.Drawing.Color.MediumSpringGreen;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -247,7 +270,9 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Splitter splitter1;
+        private Profile_Frame profile_Frame1;
+        private System.Windows.Forms.Panel panel_topic_list;
+        private UserCompenent.Topic_State_Frame topic_State_Frame1;
     }
 }
 

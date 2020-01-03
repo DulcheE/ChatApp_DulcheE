@@ -8,7 +8,7 @@ using static ServerSide.Database;
 
 namespace ServerSide
 {
-    class ServerTopicListener
+    class ServerClientTopicListener
     {
         private Topic _topic;
         private User _user;
@@ -31,7 +31,7 @@ namespace ServerSide
 
 
 
-        public ServerTopicListener(Topic topic, TcpClient connection, ServerTopic topicServer)
+        public ServerClientTopicListener(Topic topic, TcpClient connection, ServerTopic topicServer)
         {
             this._topic = topic;
             this._user = null;
@@ -41,7 +41,7 @@ namespace ServerSide
         }
 
 
-        ~ServerTopicListener()
+        ~ServerClientTopicListener()
         {
             if (this._serverSource != null)
             {
@@ -64,7 +64,9 @@ namespace ServerSide
                     else if (this._user != null)
                         HandlingRequest(request);
                     else
+                    {
                         Net.SendServerCommunication(this._connection.GetStream(), new Response(request, new SecurityException("Identify yourself to the ServerTopicListener first !")));
+                    }
                 }
             }
             catch (System.IO.IOException e)
@@ -126,6 +128,7 @@ namespace ServerSide
             }
             catch(CommunicationException ce)
             {
+                Console.WriteLine("Sending CommunicationException in Response :\n" + ce.Message);
                 Net.SendServerCommunication(this._connection.GetStream(), new Response(request, ce));
             }
 

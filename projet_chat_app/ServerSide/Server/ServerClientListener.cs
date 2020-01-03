@@ -11,7 +11,7 @@ using static ServerSide.Security;
 
 namespace ServerSide
 {
-    class ServerListener
+    class ServerClientListener
     {
         private Server _server;
         private TcpClient _connection;
@@ -32,7 +32,7 @@ namespace ServerSide
             ServerEvents.MessageSender -= this.OnMessageSended;
         }
 
-        public ServerListener(Server server, TcpClient connection)
+        public ServerClientListener(Server server, TcpClient connection)
         {
             this._server = server;
             this._connection = connection;
@@ -191,16 +191,22 @@ namespace ServerSide
 
         private void HandlingMessage(SendMessage m)
         {
-
-            if (m.Dest is User)
+            switch (m.Dest)
             {
-                Security.TestUser((User)m.Dest);
+                case User uDest:
 
-                Net.SendClientCommunication(_DestPrive[((User)m.Dest).Username].GetStream(), m);
-            }
-            else
-            {
-                ServerEvents.OnSendMessage(this, m);
+                    Security.TestUser((User)m.Source, this._User);
+
+                    Net.SendServerCommunication( _DestPrive[(uDest).Username].GetStream(), new ApprouvedMessage(MessageService.addToUser(uDest, m.Source, m.Content)) );
+
+                    break;
+
+
+                default:
+
+                    ServerEvents.OnSendMessage(this, m);
+
+                    break;
             }
             
         }
@@ -255,7 +261,7 @@ namespace ServerSide
 
             Net.SendServerCommunication(this._connection.GetStream(), new Response(j, topic));
 
-            this._server.messageToTopic(topic, "The User `" + j.User.Username + "` join the topic !");
+            this._server.serverTopics[topic.Topic_name].SendMessageToClients("The User `" + j.User.Username + "` join the topic !");
         }
 
 
@@ -284,7 +290,7 @@ namespace ServerSide
 
                 Console.WriteLine("Creating new TopicServer for `" + new_topic.Topic_name + "` !\n");
                 ServerTopic topicServer = new ServerTopic(new_topic);
-                this._server._serverTopics.Add(new_topic.Topic_name, topicServer);
+                this._server.serverTopics.Add(new_topic.Topic_name, topicServer);
                 new Thread(topicServer.start).Start();
             }
 

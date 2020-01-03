@@ -9,29 +9,26 @@ using System.Threading;
 
 namespace ClientSide
 {
-    public class ClientTopic
+    public partial class ClientTopic
     {
-        private TcpClient comm;
+        private TcpClient _comm;
 
-        private Client client;
+        private Client _client;
         public readonly Topic Topic;
-
-        private ClientTopicListener clientTopicListener;
 
 
         public ClientTopic(Client client, Topic topic)
         {
-            this.client = client;
+            this._client = client;
             this.Topic = topic;
 
             try
             {
-                this.comm = new TcpClient(client.hostname, Topic.Port);
+                this._comm = new TcpClient(client.hostname, Topic.Port);
                 ConsoleManager.TrackWriteLine(ConsoleColor.Green, "[" + Thread.CurrentThread.Name + "] Connection created to `" + client.hostname + "` on port `" + Topic.Port + "` !");
 
-                this.clientTopicListener = new ClientTopicListener(this.comm, this.client, this.Topic);
 
-                Thread t = new Thread(this.clientTopicListener.HandlingConnection);
+                Thread t = new Thread(this.Listener);
                 t.Name = "TopicListener `" + this.Topic.Topic_name + "`";
                 t.Start();
             }
@@ -45,16 +42,16 @@ namespace ClientSide
 
         public void SendingMessage(string content, Action<object> callback)
         {
-            SendMessage m = new SendMessage(this.client.User, this.Topic, content);
-            Net.SendClientCommunication(this.comm.GetStream(), m);
+            SendMessage m = new SendMessage(this._client.User, this.Topic, content);
+            Net.SendClientCommunication(this._comm.GetStream(), m);
 
             ResponseEvent.MyResponseEvent += new ResponseEvent(m, callback).OnResponse;
         }
 
         public void LeaveTopic(Action<object> callback)
         {
-            Leave l = new Leave(this.client.User, this.Topic);
-            Net.SendClientCommunication(this.comm.GetStream(), l);
+            Leave l = new Leave(this._client.User, this.Topic);
+            Net.SendClientCommunication(this._comm.GetStream(), l);
 
             ResponseEvent.MyResponseEvent += new ResponseEvent(l, callback).OnResponse;
         }
@@ -62,18 +59,10 @@ namespace ClientSide
         public void DeleteTopic(string password, Action<object> callback)
         {
             this.Topic.Password = password;
-            Delete d = new Delete(this.client.User, this.Topic);
-            Net.SendClientCommunication(this.comm.GetStream(), d);
+            Delete d = new Delete(this._client.User, this.Topic);
+            Net.SendClientCommunication(this._comm.GetStream(), d);
 
             ResponseEvent.MyResponseEvent += new ResponseEvent(d, callback).OnResponse;
-        }
-
-
-
-
-        public void KillThread()
-        {
-            this.clientTopicListener.Terminate();
         }
 
 

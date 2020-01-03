@@ -17,9 +17,27 @@ namespace TestProjectForm
             InitializeComponent();
         }
 
+
+        private List<Topic_Frame> Topic_Frames = new List<Topic_Frame>();
         private void Form1_Load(object sender, EventArgs e)
         {
+            int num_Topic_Frame = 20;
 
+            for(int i = 0; i < num_Topic_Frame;)
+            {
+                Topic_Frame tf = new Topic_Frame();
+                tf.Dock = System.Windows.Forms.DockStyle.Top;
+                tf.Topic = "Topic #" + ++i;
+
+                this.panel_topic_list.Controls.Add(tf);
+
+                Topic_Frames.Add(tf);
+            }
+
+            for(int i = Topic_Frames.Count - 1; i >= 0; i--)
+            {
+                Topic_Frames[i].SendToBack();
+            }
         }
 
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)

@@ -130,4 +130,23 @@ namespace Communication
 
     }
 
+
+    [Serializable]
+    public class ApprouvedMessage : ServerCommunication
+    {
+        public Message message;
+
+        public ApprouvedMessage(Message message) : base()
+        {
+            this.message = message;
+        }
+
+
+
+        public override string ToString()
+        {
+            return this.message.ToString();
+        }
+    }
+
 }
