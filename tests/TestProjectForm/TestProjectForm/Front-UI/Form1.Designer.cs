@@ -29,112 +29,65 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel_topic_list = new System.Windows.Forms.Panel();
-            this.topic_State_Frame1 = new TestProjectForm.UserCompenent.Topic_State_Frame();
-            this.profile_Frame1 = new TestProjectForm.Profile_Frame();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel_HeadContent = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel_Head = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panel_Content = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel_HeadContent.SuspendLayout();
+            this.tableLayoutPanel_Head.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel5.SuspendLayout();
+            this.panel_Content.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel_HeadContent
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel3, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel5, 2, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 636);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tableLayoutPanel_HeadContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1184F));
+            this.tableLayoutPanel_HeadContent.Controls.Add(this.tableLayoutPanel_Head, 0, 0);
+            this.tableLayoutPanel_HeadContent.Controls.Add(this.panel_Content, 0, 1);
+            this.tableLayoutPanel_HeadContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_HeadContent.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel_HeadContent.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel_HeadContent.Name = "tableLayoutPanel_HeadContent";
+            this.tableLayoutPanel_HeadContent.RowCount = 2;
+            this.tableLayoutPanel_HeadContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel_HeadContent.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_HeadContent.Size = new System.Drawing.Size(1184, 636);
+            this.tableLayoutPanel_HeadContent.TabIndex = 1;
             // 
-            // panel1
+            // tableLayoutPanel_Head
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.panel1.Controls.Add(this.panel_topic_list);
-            this.panel1.Controls.Add(this.topic_State_Frame1);
-            this.panel1.Controls.Add(this.profile_Frame1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 40);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(236, 596);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.tableLayoutPanel_Head.ColumnCount = 3;
+            this.tableLayoutPanel_Head.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel_Head.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel_Head.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel_Head.Controls.Add(this.panel4, 0, 0);
+            this.tableLayoutPanel_Head.Controls.Add(this.panel5, 2, 0);
+            this.tableLayoutPanel_Head.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_Head.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel_Head.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel_Head.Name = "tableLayoutPanel_Head";
+            this.tableLayoutPanel_Head.RowCount = 1;
+            this.tableLayoutPanel_Head.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Head.Size = new System.Drawing.Size(1184, 40);
+            this.tableLayoutPanel_Head.TabIndex = 2;
             // 
-            // panel_topic_list
+            // panel_Content
             // 
-            this.panel_topic_list.AutoScroll = true;
-            this.panel_topic_list.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_topic_list.Location = new System.Drawing.Point(0, 77);
-            this.panel_topic_list.Margin = new System.Windows.Forms.Padding(0);
-            this.panel_topic_list.Name = "panel_topic_list";
-            this.panel_topic_list.Size = new System.Drawing.Size(236, 442);
-            this.panel_topic_list.TabIndex = 10;
-            // 
-            // topic_State_Frame1
-            // 
-            this.topic_State_Frame1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.topic_State_Frame1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.topic_State_Frame1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.topic_State_Frame1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.topic_State_Frame1.Location = new System.Drawing.Point(0, 519);
-            this.topic_State_Frame1.Name = "topic_State_Frame1";
-            this.topic_State_Frame1.Size = new System.Drawing.Size(236, 77);
-            this.topic_State_Frame1.TabIndex = 9;
-            // 
-            // profile_Frame1
-            // 
-            this.profile_Frame1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.profile_Frame1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.profile_Frame1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.profile_Frame1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.profile_Frame1.Location = new System.Drawing.Point(0, 0);
-            this.profile_Frame1.Name = "profile_Frame1";
-            this.profile_Frame1.Size = new System.Drawing.Size(236, 77);
-            this.profile_Frame1.TabIndex = 8;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(236, 40);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(710, 596);
-            this.panel2.TabIndex = 1;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(946, 40);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(238, 596);
-            this.panel3.TabIndex = 2;
+            this.panel_Content.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.panel_Content.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Content.Location = new System.Drawing.Point(0, 40);
+            this.panel_Content.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Content.Name = "panel_Content";
+            this.panel_Content.Size = new System.Drawing.Size(1184, 596);
+            this.panel_Content.TabIndex = 0;
+            this.panel_Content.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Content_Paint);
             // 
             // panel4
             // 
@@ -240,7 +193,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumSpringGreen;
             this.ClientSize = new System.Drawing.Size(1184, 636);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tableLayoutPanel_HeadContent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -248,31 +201,28 @@
             this.Text = "Form1";
             this.TransparencyKey = System.Drawing.Color.MediumSpringGreen;
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel_HeadContent.ResumeLayout(false);
+            this.tableLayoutPanel_Head.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel5.ResumeLayout(false);
+            this.panel_Content.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_HeadContent;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Head;
+        private System.Windows.Forms.Panel panel_Content;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label1;
-        private Profile_Frame profile_Frame1;
-        private System.Windows.Forms.Panel panel_topic_list;
-        private UserCompenent.Topic_State_Frame topic_State_Frame1;
     }
 }
 

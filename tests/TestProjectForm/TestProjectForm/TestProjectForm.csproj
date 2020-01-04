@@ -52,6 +52,12 @@
     <Compile Include="Front-UI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Front-UI\UserCompenent\Content_Connected.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Content_Connected.Designer.cs">
+      <DependentUpon>Content_Connected.cs</DependentUpon>
+    </Compile>
     <Compile Include="Front-UI\UserCompenent\Profile_Frame.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1,4 +1,4 @@
-﻿namespace TestProjectForm
+﻿namespace TestProjectForm.UserCompenent
 {
     partial class Topic_Frame
     {

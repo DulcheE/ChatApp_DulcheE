@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TestProjectForm
+namespace TestProjectForm.UserCompenent
 {
     public partial class Topic_Frame : UserControl
     {
