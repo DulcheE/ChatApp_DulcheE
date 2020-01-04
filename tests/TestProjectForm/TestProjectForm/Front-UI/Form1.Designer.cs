@@ -1,4 +1,6 @@
-﻿namespace TestProjectForm
+﻿using TestProjectForm.UserCompenent;
+
+namespace TestProjectForm
 {
     partial class Form1
     {
@@ -38,6 +40,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panel_Content = new System.Windows.Forms.Panel();
+            this.content_Connexion1 = new TestProjectForm.UserCompenent.Content_Connexion();
+            this.content_Connected1 = new TestProjectForm.UserCompenent.Content_Connected();
             this.tableLayoutPanel_HeadContent.SuspendLayout();
             this.tableLayoutPanel_Head.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -74,25 +78,14 @@
             this.tableLayoutPanel_Head.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_Head.Name = "tableLayoutPanel_Head";
             this.tableLayoutPanel_Head.RowCount = 1;
-            this.tableLayoutPanel_Head.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_Head.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel_Head.Size = new System.Drawing.Size(1184, 40);
             this.tableLayoutPanel_Head.TabIndex = 2;
-            // 
-            // panel_Content
-            // 
-            this.panel_Content.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.panel_Content.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_Content.Location = new System.Drawing.Point(0, 40);
-            this.panel_Content.Margin = new System.Windows.Forms.Padding(0);
-            this.panel_Content.Name = "panel_Content";
-            this.panel_Content.Size = new System.Drawing.Size(1184, 596);
-            this.panel_Content.TabIndex = 0;
-            this.panel_Content.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Content_Paint);
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.Control;
-            this.panel4.BackgroundImage = global::TestProjectForm.Properties.Resources.Border_Left2;
+            this.panel4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel4.BackgroundImage")));
             this.panel4.Controls.Add(this.label1);
             this.panel4.Controls.Add(this.pictureBox1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -126,7 +119,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox1.Image = global::TestProjectForm.Properties.Resources.OTTER;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(40, 40);
@@ -140,7 +133,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Control;
-            this.panel5.BackgroundImage = global::TestProjectForm.Properties.Resources.Border_Right1;
+            this.panel5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel5.BackgroundImage")));
             this.panel5.Controls.Add(this.button2);
             this.panel5.Controls.Add(this.button1);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -187,6 +180,41 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // panel_Content
+            // 
+            this.panel_Content.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.panel_Content.Controls.Add(this.content_Connexion1);
+            this.panel_Content.Controls.Add(this.content_Connected1);
+            this.panel_Content.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_Content.Location = new System.Drawing.Point(0, 40);
+            this.panel_Content.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_Content.Name = "panel_Content";
+            this.panel_Content.Size = new System.Drawing.Size(1184, 596);
+            this.panel_Content.TabIndex = 0;
+            // 
+            // content_Connexion1
+            // 
+            this.content_Connexion1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.content_Connexion1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.content_Connexion1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.content_Connexion1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.content_Connexion1.Location = new System.Drawing.Point(0, 0);
+            this.content_Connexion1.Name = "content_Connexion1";
+            this.content_Connexion1.Size = new System.Drawing.Size(1184, 596);
+            this.content_Connexion1.TabIndex = 0;
+            this.content_Connexion1.Load += new System.EventHandler(this.content_Connexion1_Load);
+            // 
+            // content_Connected1
+            // 
+            this.content_Connected1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.content_Connected1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.content_Connected1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.content_Connected1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.content_Connected1.Location = new System.Drawing.Point(0, 0);
+            this.content_Connected1.Name = "content_Connected1";
+            this.content_Connected1.Size = new System.Drawing.Size(1184, 596);
+            this.content_Connected1.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,6 +251,8 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label1;
+        private Content_Connexion content_Connexion1;
+        private Content_Connected content_Connected1;
     }
 }
 

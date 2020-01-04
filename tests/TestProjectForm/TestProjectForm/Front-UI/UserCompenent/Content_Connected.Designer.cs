@@ -134,7 +134,14 @@ namespace TestProjectForm.UserCompenent
             //
             // this Content_Connected
             //
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.tableLayoutPanel_Content);
+            this.Name = "Content_Connected";
+            this.Size = new System.Drawing.Size(1184, 596);
             this.Load += new System.EventHandler(this.Content_Connected_Load);
+            this.ResumeLayout(false);
 
 
 

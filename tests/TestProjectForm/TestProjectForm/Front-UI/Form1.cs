@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
-using TestProjectForm.UserCompenent;
+using ClientSide;
 
 namespace TestProjectForm
 {
@@ -19,19 +13,18 @@ namespace TestProjectForm
         }
 
 
+        private Client _client;
         private void Form1_Load(object sender, EventArgs e)
         {
+            Thread.CurrentThread.Name = "I/O";
+            DebugLog debugLog = new DebugLog();
+            this._client = new Client("127.0.0.1", 8976, debugLog);
+            this._client.Start();
+
+            debugLog.Show();
         }
 
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void panel_Content_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -74,32 +67,19 @@ namespace TestProjectForm
             this.WindowState = FormWindowState.Minimized;
         }
 
-        int beginMouse_splitter_X = 0;
-        bool isMouseDown_splitter = false;
-        private void Splitter1_MouseDown(object sender, MouseEventArgs e)
+        private void content_Connexion1_Load(object sender, EventArgs e)
         {
-            if (!isMouseDown_splitter)
+
+            this.content_Connexion1.Add_button1_Click((sender_click, e_click) =>
             {
-                beginMouse_splitter_X = Form1.MousePosition.X;
-            }
+                this._client.Connection(this.content_Connexion1.textBoxConUsername, this.content_Connexion1.textBoxConPassword);
 
+                this.SuspendLayout();
+                this.content_Connexion1.Hide();
+                this.content_Connected1.Show();
+                this.ResumeLayout();
 
-            isMouseDown_splitter = true;
-        }
-
-        private void Splitter1_MouseUp(object sender, MouseEventArgs e)
-        {
-            isMouseDown_splitter = false;
-        }
-
-        private void Splitter1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isMouseDown_splitter)
-            {
-                this.SetDesktopLocation(Form1.ActiveForm.Location.X + Form1.MousePosition.X - beginMouse_splitter_X, Form1.ActiveForm.Location.Y);
-
-                beginMouse_splitter_X = Form1.MousePosition.X;
-            }
+            });
         }
     }
 }
