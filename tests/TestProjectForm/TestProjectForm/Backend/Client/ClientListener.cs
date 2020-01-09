@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace ClientSide
 {
@@ -22,7 +23,12 @@ namespace ClientSide
             this.terminate = true;
 
             if(this.User != null)
-                this.DebugLog.PrintDebug(System.Drawing.Color.Yellow, "[" + Thread.CurrentThread.Name + "] KILLING THREAD ClientListener " + this.User.Username);
+            {
+                string thread_name = Thread.CurrentThread.Name;
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this.Form.DebugLog.PrintDebug(System.Drawing.Color.Yellow, "[" + thread_name + "] KILLING THREAD ClientListener " + this.User.Username);
+                }) );
+            }
 
             if (this._comm.Connected)
             {
@@ -41,7 +47,10 @@ namespace ClientSide
             {
                 while (!terminate)
                 {
-                    this.DebugLog.PrintDebug(System.Drawing.Color.White, "[" + Thread.CurrentThread.Name + "] Wainting Communication...\n");
+                    string thread_name = Thread.CurrentThread.Name;
+                    this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.White, "[" + thread_name + "] Wainting Communication...\n");
+                    }) );
                     ServerCommunication communication = Net.RecieveServerCommunication(this._comm.GetStream());
 
                     //On gère la ressource et on continue d'écouter
@@ -50,15 +59,25 @@ namespace ClientSide
             }
             catch (System.IO.IOException e)
             {
-                this.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "[" + Thread.CurrentThread.Name + "] The connection to the server has ended !");
-                this.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, e.Message);
+                string thread_name = Thread.CurrentThread.Name;
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this.Form.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "[" + thread_name + "] The connection to the server has ended !");
+                }) );
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this.Form.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, e.Message);
+                }) );
 
                 KillClient();
             }
             catch (System.Runtime.Serialization.SerializationException e)
             {
-                this.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "[" + Thread.CurrentThread.Name + "] The connection to the server has ended !");
-                this.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, e.Message);
+                string thread_name = Thread.CurrentThread.Name;
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this.Form.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "[" + thread_name + "] The connection to the server has ended !");
+                }) );
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                        this.Form.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, e.Message);
+                }) );
 
                 KillClient();
             }
@@ -72,7 +91,10 @@ namespace ClientSide
         /// <param name="communication">ServerCommunication received from the Server</param>
         private void HandlingServerCommunication(ServerCommunication communication)
         {
-            this.DebugLog.PrintDebug(System.Drawing.Color.White, "[" + Thread.CurrentThread.Name + "] Communication recieve :\n[");
+            string thread_name = Thread.CurrentThread.Name;
+            this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                this.Form.DebugLog.PrintDebug(System.Drawing.Color.White, "[" + thread_name + "] Communication recieve :\n[");
+            }) );
 
             switch (communication)
             {
@@ -92,13 +114,17 @@ namespace ClientSide
 
                 default:
 
-                    this.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "[" + Thread.CurrentThread.Name + "] Type of Communication unknown");
+                    this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                        this.Form.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "[" + thread_name + "] Type of Communication unknown");
+                    }) );
 
                     break;
 
             }
 
-            this.DebugLog.PrintDebug(System.Drawing.Color.White, "]\n");
+            this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                this.Form.DebugLog.PrintDebug(System.Drawing.Color.White, "]\n");
+            }) );
         }
 
 
@@ -110,8 +136,11 @@ namespace ClientSide
 
         private void HandlingApprouvedMessage(ApprouvedMessage am)
         {
-            string str = "[" + Thread.CurrentThread.Name + "] Private message : [\n" + am.message.ToString() + "\n]";
-            this.DebugLog.PrintDebug(System.Drawing.Color.Magenta, str);
+            string thread_name = Thread.CurrentThread.Name;
+            string str = "[" + thread_name + "] Private message : [\n" + am.message.ToString() + "\n]";
+            this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                this.Form.DebugLog.PrintDebug(System.Drawing.Color.Magenta, str);
+            }) );
         }
 
     }

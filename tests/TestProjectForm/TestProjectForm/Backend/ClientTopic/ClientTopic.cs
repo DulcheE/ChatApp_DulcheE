@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace ClientSide
 {
@@ -24,7 +25,10 @@ namespace ClientSide
             try
             {
                 this._comm = new TcpClient(client.hostname, Topic.Port);
-                this._client.DebugLog.PrintDebug(System.Drawing.Color.Green, "[" + Thread.CurrentThread.Name + "] Connection created to `" + client.hostname + "` on port `" + Topic.Port + "` !");
+                string thread_name = Thread.CurrentThread.Name;
+                this._client.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this._client.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "[" + thread_name + "] Connection created to `" + client.hostname + "` on port `" + Topic.Port + "` !");
+                }) );
 
 
                 Thread t = new Thread(this.Listener);
@@ -33,7 +37,10 @@ namespace ClientSide
             }
             catch (SocketException e)
             {
-                this._client.DebugLog.PrintDebug(System.Drawing.Color.Red, "[" + Thread.CurrentThread.Name + "] Impossible to connect to the server :\n" + e.Message);
+                string thread_name = Thread.CurrentThread.Name;
+                this._client.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this._client.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "[" + thread_name + "] Impossible to connect to the server :\n" + e.Message);
+                }) );
             }
         }
 

@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -107,9 +108,6 @@
     <Compile Include="Front-UI\UserCompenent\Topic_State_Frame.Designer.cs">
       <DependentUpon>Topic_State_Frame.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Front-UI\Composant\TextBoxCustom.resx">
-      <DependentUpon>TextBoxCustom.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Front-UI\DebugLog.resx">
       <DependentUpon>DebugLog.cs</DependentUpon>
     </EmbeddedResource>
@@ -172,6 +170,11 @@
   <ItemGroup>
     <None Include="Front-UI\Resources\Border_Left2.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Communication_WFA\Communication_WFA.csproj">
+      <Project>{b6676e65-b27f-40ac-ac84-8cc62f6a19d9}</Project>
+      <Name>Communication_WFA</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

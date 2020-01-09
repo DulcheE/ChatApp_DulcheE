@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using TestProjectForm;
+using System.Windows.Forms;
 
 namespace ClientSide
 {
@@ -14,7 +15,7 @@ namespace ClientSide
     /// </summary>
     public partial class Client
     {
-        public readonly DebugLog DebugLog;
+        public readonly Form1 Form;
 
         public readonly string hostname;
         private int _port;
@@ -26,15 +27,15 @@ namespace ClientSide
         public User User => this._User;
         public Dictionary<string, ClientTopic> Topics => _Topics;
 
-        public Client(string hostname, int port, DebugLog DebugLog)
+        public Client(string hostname, int port, Form1 Form)
         {
             this.hostname = hostname;
             this._port = port;
-            this.DebugLog = DebugLog;
+            this.Form = Form;
 
             this._Topics = new Dictionary<string, ClientTopic>();
 
-            ResponseEvent.DebugLog = this.DebugLog;
+            ResponseEvent.DebugLog = this.Form.DebugLog;
         }
 
 
@@ -48,7 +49,10 @@ namespace ClientSide
             try
             {
                 this._comm = new TcpClient(hostname, _port);
-                this.DebugLog.PrintDebug(System.Drawing.Color.Yellow, "[" + Thread.CurrentThread.Name + "] Connection established with " + this._comm.Client.RemoteEndPoint);
+                string thread_name = Thread.CurrentThread.Name;
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "[" + thread_name + "] Connection established with " + this._comm.Client.RemoteEndPoint);
+                }) );
 
                 Thread t = new Thread(this.Listener);
                 t.Name = "ClientListener";
@@ -56,7 +60,11 @@ namespace ClientSide
             }
             catch(SocketException e)
             {
-                this.DebugLog.PrintDebug(System.Drawing.Color.Red, "[" + Thread.CurrentThread.Name + "] Impossible to connect to the server :\n" + e.Message);
+                string thread_name = Thread.CurrentThread.Name;
+                this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                    this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "[" + thread_name + "] Impossible to connect to the server :\n" + e.Message);
+                }) );
+
             }
 
         }
@@ -79,9 +87,12 @@ namespace ClientSide
 
         public void Connection(string username, string password)
         {
+            this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                this.Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Trying to connect as " + username + ":" + password);
+            }));
 
             ClientCommunication request = new LogIn(username, password);
-            Net.SendClientCommunication(_comm.GetStream(), request);
+            Net.SendClientCommunication(this._comm.GetStream(), request);
 
             ResponseEvent.MyResponseEvent += new ResponseEvent(request, (response) =>
             {
@@ -91,15 +102,25 @@ namespace ClientSide
                     case bool b:
 
                         if (b)
-                            this.DebugLog.PrintDebug(System.Drawing.Color.Green, "I'm connected as " + username);
+                        {
+                            this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                                this.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "I'm connected as " + username);
+                            }));
+
+                            this.Form.Connect();
+                        }
 
                         break;
+
 
                     case CommunicationException ce:
 
-                        this.DebugLog.PrintDebug(System.Drawing.Color.Red, ce.Message);
+                        this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, ce.Message);
+                        }) );
 
                         break;
+
                 }
 
             }).OnResponse;

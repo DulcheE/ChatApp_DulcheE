@@ -16,17 +16,17 @@ namespace TestProjectForm
         private Client _client;
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.DebugLog.Show();
+
+            this._client = new Client("127.0.0.1", 8976, this);
             Thread.CurrentThread.Name = "I/O";
-            DebugLog debugLog = new DebugLog();
-            this._client = new Client("127.0.0.1", 8976, debugLog);
             this._client.Start();
 
-            debugLog.Show();
         }
 
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonExit_Click(object sender, EventArgs e)
         {
             Form1.ActiveForm.Close();
         }
@@ -62,7 +62,7 @@ namespace TestProjectForm
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
@@ -73,13 +73,19 @@ namespace TestProjectForm
             this.content_Connexion1.Add_button1_Click((sender_click, e_click) =>
             {
                 this._client.Connection(this.content_Connexion1.textBoxConUsername, this.content_Connexion1.textBoxConPassword);
+            });
+        }
 
+
+        public void Connect()
+        {
+            if(this.content_Connexion1.Visible && !this.content_Connected1.Visible)
+            {
                 this.SuspendLayout();
                 this.content_Connexion1.Hide();
                 this.content_Connected1.Show();
                 this.ResumeLayout();
-
-            });
+            }
         }
     }
 }

@@ -28,26 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Console = new System.Windows.Forms.Label();
+            this.Console = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // Console
             // 
+            this.Console.AutoScroll = true;
+            this.Console.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.Console.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Console.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Console.Location = new System.Drawing.Point(0, 0);
             this.Console.Name = "Console";
-            this.Console.Size = new System.Drawing.Size(800, 450);
-            this.Console.TabIndex = 0;
+            this.Console.Size = new System.Drawing.Size(1067, 554);
+            this.Console.TabIndex = 1;
+            this.Console.Resize += new System.EventHandler(this.Console_Resize);
             // 
             // DebugLog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.Console);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.Control;
+            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "DebugLog";
             this.ShowIcon = false;
             this.Text = "DebugLog";
@@ -56,7 +60,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label Console;
+        private System.Windows.Forms.Panel Console;
     }
 }

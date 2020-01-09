@@ -1,4 +1,4 @@
-﻿namespace TestProjectForm.Front_UI.Composant
+﻿namespace TestProjectForm.Composant
 {
     partial class TextBoxCustom
     {
@@ -7,7 +7,7 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Nettoyage des ressources utilisées.
         /// </summary>
         /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
@@ -23,26 +23,78 @@
         #region Code généré par le Concepteur de composants
 
         /// <summary>
-        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
+        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas 
         /// le contenu de cette méthode avec l'éditeur de code.
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox = new System.Windows.Forms.TextBox();
-            // 
-            // textBox1
-            // 
-            this.textBox.Location = new System.Drawing.Point(0, 0);
-            this.textBox.Name = "textBox1";
-            this.textBox.Size = new System.Drawing.Size(100, 20);
-            this.textBox.TabIndex = 0;
-            this.textBox.GotFocus += new System.EventHandler(this.textBox1_GotFocus);
-            this.textBox.LostFocus += new System.EventHandler(this.textBox1_LostFocus);
+            components = new System.ComponentModel.Container();
 
+            this.GotFocus += new System.EventHandler(OnGotFocusCustom);
+            this.LostFocus += new System.EventHandler(OnLostFocusCustom);
         }
 
         #endregion
+        protected string _PlaceHolder;
+        public string PlaceHolder
+        {
+            get => this._PlaceHolder;
+            set => this._PlaceHolder = value;
+        }
 
-        public System.Windows.Forms.TextBox textBox;
+        public override string Text
+        {
+            get
+            {
+                if (this.IsOnPlaceHolder)
+                {
+                    return " ";
+                }
+                else
+                {
+                    return base.Text;
+                }
+            }
+            set => base.Text = value;
+        }
+
+
+        protected System.Drawing.Color _PlaceHolderColor;
+        public System.Drawing.Color PlaceHolderColor
+        {
+            get
+            {
+                return this._PlaceHolderColor;
+            }
+
+            set
+            {
+                this._PlaceHolderColor = value;
+
+                if (this.IsOnPlaceHolder)
+                    base.ForeColor = value;
+            }
+        }
+
+        protected System.Drawing.Color _saveForeColor;
+        public override System.Drawing.Color ForeColor
+        {
+            get
+            {
+                return base.ForeColor;
+            }
+            set
+            {
+                if (this.IsOnPlaceHolder)
+                {
+                    this._saveForeColor = value;
+                }
+                else
+                {
+                    base.ForeColor = value;
+                }
+            }
+        }
+
     }
 }

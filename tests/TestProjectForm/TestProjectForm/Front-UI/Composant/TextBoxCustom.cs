@@ -1,55 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace TestProjectForm.Front_UI.Composant
+namespace TestProjectForm.Composant
 {
-    public partial class TextBoxCustom : Component
+    public partial class TextBoxCustom : System.Windows.Forms.TextBox
     {
         public TextBoxCustom()
         {
             InitializeComponent();
         }
 
-        public TextBoxCustom(IContainer container)
+        protected override void OnPaint(PaintEventArgs pe)
         {
-            container.Add(this);
-
-            InitializeComponent();
+            base.OnPaint(pe);
         }
 
-        private string _Placeholder;
-        public string Placeholder
+        protected bool IsOnPlaceHolder = false;
+
+        protected void OnGotFocusCustom(object sender, EventArgs e)
         {
-            get
+            if (this.IsOnPlaceHolder)
             {
-                return this._Placeholder;
-            }
-            set
-            {
-                this._Placeholder = value;
+                this.IsOnPlaceHolder = false;
+
+                this.Text = "";
+                this.ForeColor = this._saveForeColor;
             }
         }
 
-        private bool isOnPlaceholder = false;
-        public void textBox1_GotFocus(object sender, System.EventArgs e)
-        {
-            if (this.isOnPlaceholder)
-                this.textBox.Text = "";
-        }
 
-
-        public void textBox1_LostFocus(object sender, System.EventArgs e)
+        protected void OnLostFocusCustom(object sender, EventArgs e)
         {
-            if (this.textBox.Text.Length == 0)
+            if (this.Text.Trim(' ') == string.Empty)
             {
-                this.isOnPlaceholder = true;
-                this.textBox.Text = this.Placeholder;
+                this.Text = this.PlaceHolder;
+                this._saveForeColor = this.ForeColor;
+                this.ForeColor = this.PlaceHolderColor;
+
+                this.IsOnPlaceHolder = true;
             }
         }
+
+
+        public void Init()
+        {
+
+            if (this.Text.Trim(' ') == string.Empty)
+            {
+                this.Text = this.PlaceHolder;
+                this._saveForeColor = this.ForeColor;
+                this.ForeColor = this.PlaceHolderColor;
+
+                this.IsOnPlaceHolder = true;
+            }
+        }
+
     }
 }

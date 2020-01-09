@@ -28,5 +28,14 @@ namespace TestProjectForm.UserCompenent
         {
             this.button1.Click -= new System.EventHandler(eventOnClick);
         }
+
+        private void Content_Connexion_Load(object sender, EventArgs e)
+        {
+            this._textBoxConUsername.Init();
+            this._textBoxConPassword.Init();
+            this._textBoxInsUsername.Init();
+            this._textBoxInsPassword.Init();
+            this._textBoxInsEmail.Init();
+        }
     }
 }

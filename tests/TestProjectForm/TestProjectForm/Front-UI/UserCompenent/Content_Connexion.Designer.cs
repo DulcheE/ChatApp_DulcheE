@@ -33,8 +33,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this._textBoxConPassword = new System.Windows.Forms.TextBox();
-            this._textBoxConUsername = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -42,11 +40,13 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this._textBoxInsUsername = new System.Windows.Forms.TextBox();
-            this._textBoxInsPassword = new System.Windows.Forms.TextBox();
-            this._textBoxInsEmail = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
+            this._textBoxConPassword = new TestProjectForm.Composant.TextBoxCustom();
+            this._textBoxConUsername = new TestProjectForm.Composant.TextBoxCustom();
+            this._textBoxInsUsername = new TestProjectForm.Composant.TextBoxCustom();
+            this._textBoxInsPassword = new TestProjectForm.Composant.TextBoxCustom();
+            this._textBoxInsEmail = new TestProjectForm.Composant.TextBoxCustom();
             this.tableLayoutPanel0.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -146,30 +146,6 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(404, 202);
             this.tableLayoutPanel4.TabIndex = 1;
-            // 
-            // _textBoxConPassword
-            // 
-            this._textBoxConPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._textBoxConPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._textBoxConPassword.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._textBoxConPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this._textBoxConPassword.Location = new System.Drawing.Point(76, 123);
-            this._textBoxConPassword.Name = "_textBoxConPassword";
-            this._textBoxConPassword.Size = new System.Drawing.Size(251, 27);
-            this._textBoxConPassword.TabIndex = 1;
-            this._textBoxConPassword.Text = "Password";
-            // 
-            // _textBoxConUsername
-            // 
-            this._textBoxConUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._textBoxConUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._textBoxConUsername.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._textBoxConUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this._textBoxConUsername.Location = new System.Drawing.Point(76, 43);
-            this._textBoxConUsername.Name = "_textBoxConUsername";
-            this._textBoxConUsername.Size = new System.Drawing.Size(251, 27);
-            this._textBoxConUsername.TabIndex = 0;
-            this._textBoxConUsername.Text = "Username";
             // 
             // tableLayoutPanel6
             // 
@@ -281,42 +257,6 @@
             this.tableLayoutPanel7.Size = new System.Drawing.Size(398, 198);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
-            // _textBoxInsUsername
-            // 
-            this._textBoxInsUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._textBoxInsUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._textBoxInsUsername.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._textBoxInsUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this._textBoxInsUsername.Location = new System.Drawing.Point(75, 32);
-            this._textBoxInsUsername.Name = "_textBoxInsUsername";
-            this._textBoxInsUsername.Size = new System.Drawing.Size(247, 27);
-            this._textBoxInsUsername.TabIndex = 1;
-            this._textBoxInsUsername.Text = "Username";
-            // 
-            // _textBoxInsPassword
-            // 
-            this._textBoxInsPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._textBoxInsPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._textBoxInsPassword.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._textBoxInsPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this._textBoxInsPassword.Location = new System.Drawing.Point(75, 90);
-            this._textBoxInsPassword.Name = "_textBoxInsPassword";
-            this._textBoxInsPassword.Size = new System.Drawing.Size(247, 27);
-            this._textBoxInsPassword.TabIndex = 2;
-            this._textBoxInsPassword.Text = "Password";
-            // 
-            // _textBoxInsEmail
-            // 
-            this._textBoxInsEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this._textBoxInsEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._textBoxInsEmail.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._textBoxInsEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this._textBoxInsEmail.Location = new System.Drawing.Point(75, 148);
-            this._textBoxInsEmail.Name = "_textBoxInsEmail";
-            this._textBoxInsEmail.Size = new System.Drawing.Size(247, 27);
-            this._textBoxInsEmail.TabIndex = 3;
-            this._textBoxInsEmail.Text = "Email";
-            // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 3;
@@ -346,6 +286,71 @@
             this.label3.Text = "Welcome !";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // _textBoxConPassword
+            // 
+            this._textBoxConPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this._textBoxConPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBoxConPassword.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._textBoxConPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this._textBoxConPassword.Location = new System.Drawing.Point(76, 123);
+            this._textBoxConPassword.Name = "_textBoxConPassword";
+            this._textBoxConPassword.PlaceHolder = "Password";
+            this._textBoxConPassword.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this._textBoxConPassword.Size = new System.Drawing.Size(251, 32);
+            this._textBoxConPassword.TabIndex = 1;
+            // 
+            // _textBoxConUsername
+            // 
+            this._textBoxConUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this._textBoxConUsername.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBoxConUsername.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._textBoxConUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this._textBoxConUsername.Location = new System.Drawing.Point(76, 43);
+            this._textBoxConUsername.Name = "_textBoxConUsername";
+            this._textBoxConUsername.PlaceHolder = "Username";
+            this._textBoxConUsername.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this._textBoxConUsername.Size = new System.Drawing.Size(251, 32);
+            this._textBoxConUsername.TabIndex = 0;
+            // 
+            // _textBoxInsUsername
+            // 
+            this._textBoxInsUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this._textBoxInsUsername.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBoxInsUsername.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._textBoxInsUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this._textBoxInsUsername.Location = new System.Drawing.Point(75, 32);
+            this._textBoxInsUsername.Name = "_textBoxInsUsername";
+            this._textBoxInsUsername.PlaceHolder = "Username";
+            this._textBoxInsUsername.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this._textBoxInsUsername.Size = new System.Drawing.Size(247, 32);
+            this._textBoxInsUsername.TabIndex = 1;
+            // 
+            // _textBoxInsPassword
+            // 
+            this._textBoxInsPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this._textBoxInsPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBoxInsPassword.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._textBoxInsPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this._textBoxInsPassword.Location = new System.Drawing.Point(75, 90);
+            this._textBoxInsPassword.Name = "_textBoxInsPassword";
+            this._textBoxInsPassword.PlaceHolder = "Password";
+            this._textBoxInsPassword.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this._textBoxInsPassword.Size = new System.Drawing.Size(247, 32);
+            this._textBoxInsPassword.TabIndex = 2;
+            // 
+            // _textBoxInsEmail
+            // 
+            this._textBoxInsEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this._textBoxInsEmail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBoxInsEmail.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._textBoxInsEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this._textBoxInsEmail.Location = new System.Drawing.Point(75, 148);
+            this._textBoxInsEmail.Name = "_textBoxInsEmail";
+            this._textBoxInsEmail.PlaceHolder = "Email";
+            this._textBoxInsEmail.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this._textBoxInsEmail.Size = new System.Drawing.Size(247, 32);
+            this._textBoxInsEmail.TabIndex = 3;
+            // 
             // Content_Connexion
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
@@ -354,6 +359,7 @@
             this.Controls.Add(this.tableLayoutPanel0);
             this.Name = "Content_Connexion";
             this.Size = new System.Drawing.Size(1184, 596);
+            this.Load += new System.EventHandler(this.Content_Connexion_Load);
             this.tableLayoutPanel0.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -387,15 +393,16 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.TextBox _textBoxConPassword;
+        private Composant.TextBoxCustom _textBoxConPassword;
         public string textBoxConPassword => this._textBoxConPassword.Text;
-        private System.Windows.Forms.TextBox _textBoxConUsername;
+        private Composant.TextBoxCustom _textBoxConUsername;
         public string textBoxConUsername => _textBoxConUsername.Text;
-        private System.Windows.Forms.TextBox _textBoxInsUsername;
+        private Composant.TextBoxCustom _textBoxInsUsername;
         public string textBoxInsUsername => _textBoxInsUsername.Text;
-        private System.Windows.Forms.TextBox _textBoxInsPassword;
+        private Composant.TextBoxCustom _textBoxInsPassword;
         public string textBoxInsPassword => _textBoxInsPassword.Text;
-        private System.Windows.Forms.TextBox _textBoxInsEmail;
+        private Composant.TextBoxCustom _textBoxInsEmail;
+
         public string textBoxInsEmail => _textBoxInsEmail.Text;
     }
 }
