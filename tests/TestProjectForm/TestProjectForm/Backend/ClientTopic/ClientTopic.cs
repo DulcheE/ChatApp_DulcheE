@@ -30,6 +30,7 @@ namespace ClientSide
                     this._client.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "[" + thread_name + "] Connection created to `" + client.hostname + "` on port `" + Topic.Port + "` !");
                 }) );
 
+                this._client.Form.content_Connected1.AddTopicFrame(this.Topic);
 
                 Thread t = new Thread(this.Listener);
                 t.Name = "TopicListener `" + this.Topic.Topic_name + "`";

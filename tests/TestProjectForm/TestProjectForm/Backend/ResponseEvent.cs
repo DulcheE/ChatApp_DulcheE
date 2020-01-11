@@ -10,14 +10,14 @@ namespace ClientSide
 {
     class ResponseEvent
     {
-        private static DebugLog _DebugLog;
+        private static Form1 _Form;
 
-        public static DebugLog DebugLog
+        public static Form1 Form
         {
             set
             {
-                if (_DebugLog == null)
-                    _DebugLog = value;
+                if (_Form == null)
+                    _Form = value;
             }
         }
 
@@ -31,9 +31,9 @@ namespace ClientSide
         public static void WriteBufferResponse(Response r)
         {
             string thread_name = Thread.CurrentThread.Name;
-            _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+            _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
             {
-                _DebugLog.PrintDebug(System.Drawing.Color.Cyan, "[" + thread_name + "] Writting in the buffer...");
+                _Form.DebugLog.PrintDebug(System.Drawing.Color.Cyan, "[" + thread_name + "] Writting in the buffer...");
             }));
             if (r != null)
                 BufferResponse.Add(r);
@@ -44,9 +44,9 @@ namespace ClientSide
         {
             sem.WaitOne();
             string thread_name = Thread.CurrentThread.Name;
-            _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+            _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
             {
-                _DebugLog.PrintDebug(System.Drawing.Color.Cyan, "[" + thread_name + "] Read in the buffer...");
+                _Form.DebugLog.PrintDebug(System.Drawing.Color.Cyan, "[" + thread_name + "] Read in the buffer...");
             }) );
             Response r = BufferResponse[0];
             BufferResponse.RemoveAt(0);
@@ -83,25 +83,27 @@ namespace ClientSide
             {
                 MyResponseEvent -= this.OnResponse;
 
-                _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                 {
-                    _DebugLog.PrintDebug(System.Drawing.Color.Cyan, received.Content.GetType().ToString());
+                    _Form.DebugLog.PrintDebug(System.Drawing.Color.Cyan, received.Content.GetType().ToString());
                 }) );
+
                 if (!(received.Request is LogIn) && received.Content is ClientCredentialsInvalidException)
                 {
-                    _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                     {
-                        _DebugLog.PrintDebug(System.Drawing.Color.Red, ((ClientCredentialsInvalidException)received.Content).Message);
+                        _Form.DebugLog.PrintDebug(System.Drawing.Color.Red, ((ClientCredentialsInvalidException)received.Content).Message);
                     }) );
+
                     source.Disconnect();
                 }
 
                 switch (received.Request)
                 {
                     case LogIn li:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is LogIn\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is LogIn\n");
                         }));
 
                         OnResponseToLogIn(source, received);
@@ -110,9 +112,9 @@ namespace ClientSide
 
 
                     case SignIn si:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is SignIn\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is SignIn\n");
                         }));
 
                         OnResponseToSignIn(source, received);
@@ -121,9 +123,9 @@ namespace ClientSide
 
 
                     case Join j:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Join\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Join\n");
                         }));
 
                         OnResponseToJoin(source, received);
@@ -132,9 +134,9 @@ namespace ClientSide
 
 
                     case Leave l:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Leave\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Leave\n");
                         }));
 
                         OnResponseToLeave(source, received);
@@ -143,9 +145,9 @@ namespace ClientSide
 
 
                     case Creation c:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Creation\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Creation\n");
                         }));
 
                         OnResponseToCreation(source, received);
@@ -154,9 +156,9 @@ namespace ClientSide
 
 
                     case Delete d:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Delete\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Delete\n");
                         }));
 
                         OnResponseToDelete(source, received);
@@ -165,9 +167,9 @@ namespace ClientSide
 
 
                     case AskConnectUser acu:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is AskConnectUser\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is AskConnectUser\n");
                         }));
 
                         callback(received.Content);
@@ -176,9 +178,9 @@ namespace ClientSide
 
 
                     case Identification i:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Identification\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Type of Communication is Identification\n");
                         }));
 
                         OnResponseToIdentification(source, received);
@@ -187,9 +189,9 @@ namespace ClientSide
 
 
                     default:
-                        _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                        _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
-                            _DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "Type of Communication is unknown\n");
+                            _Form.DebugLog.PrintDebug(System.Drawing.Color.DarkRed, "Type of Communication is unknown\n");
                         }));
 
                         this.callback(received.Content);
@@ -232,9 +234,9 @@ namespace ClientSide
 
                 default:
 
-                    _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                     {
-                        _DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while login in : " + response.Content);
+                        _Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while login in : " + response.Content);
                     }));
 
                     break;
@@ -296,9 +298,9 @@ namespace ClientSide
 
                 default:
 
-                    _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                     {
-                        _DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while leaving the Topic : " + response);
+                        _Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while leaving the Topic : " + response);
                     }));
 
                     break;
@@ -338,9 +340,9 @@ namespace ClientSide
 
                 default:
 
-                    _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                     {
-                        _DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while creating new Topic : " + response);
+                        _Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while creating new Topic : " + response);
                     }));
 
                     break;
@@ -382,9 +384,9 @@ namespace ClientSide
 
                 default:
 
-                    _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                     {
-                        _DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while deleting the Topic : " + response);
+                        _Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while deleting the Topic : " + response);
                     }));
 
                     break;
@@ -422,9 +424,9 @@ namespace ClientSide
 
                 default:
 
-                    _DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    _Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                     {
-                        _DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while Identification to the Topic : " + response);
+                        _Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while Identification to the Topic : " + response);
                     }));
 
                     break;

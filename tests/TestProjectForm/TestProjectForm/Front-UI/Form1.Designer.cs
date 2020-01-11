@@ -217,6 +217,7 @@ namespace TestProjectForm
             this.content_Connected1.Name = "content_Connected1";
             this.content_Connected1.Size = new System.Drawing.Size(1579, 734);
             this.content_Connected1.TabIndex = 0;
+            this.content_Connected1.Hide();
             // 
             // Form1
             // 
@@ -256,7 +257,7 @@ namespace TestProjectForm
         private System.Windows.Forms.Panel panelUpperRight;
         private System.Windows.Forms.Label labelAppName;
         private Content_Connexion content_Connexion1;
-        private Content_Connected content_Connected1;
+        public Content_Connected content_Connected1;
 
         public readonly DebugLog DebugLog = new DebugLog();
     }

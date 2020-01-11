@@ -154,8 +154,11 @@ namespace ClientSide
 
         private void HandlingTopicMessages(Dictionary<long, Message> topicMessages) { 
         
+
             foreach(KeyValuePair<long, Message> message in topicMessages)
             {
+                this._client.Form.content_Connected1.topicChats[this.Topic.Topic_name].AddMessage(this._client, message.Value);
+
                 printMessage(message.Value);
             }
 

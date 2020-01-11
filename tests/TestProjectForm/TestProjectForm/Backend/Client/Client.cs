@@ -16,6 +16,7 @@ namespace ClientSide
     public partial class Client
     {
         public readonly Form1 Form;
+        public Mutex FormUpToDate;
 
         public readonly string hostname;
         private int _port;
@@ -35,7 +36,7 @@ namespace ClientSide
 
             this._Topics = new Dictionary<string, ClientTopic>();
 
-            ResponseEvent.DebugLog = this.Form.DebugLog;
+            ResponseEvent.Form = this.Form;
         }
 
 
@@ -87,7 +88,13 @@ namespace ClientSide
 
         public void Connection(string username, string password)
         {
+            this.Form.Invoke(new MethodInvoker(delegate
+            {
+               this.FormUpToDate = new Mutex(true);
+            }));
+
             this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+
                 this.Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Trying to connect as " + username + ":" + password);
             }));
 
@@ -106,8 +113,6 @@ namespace ClientSide
                             this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
                                 this.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "I'm connected as " + username);
                             }));
-
-                            this.Form.Connect();
                         }
 
                         break;
@@ -117,7 +122,7 @@ namespace ClientSide
 
                         this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
                             this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, ce.Message);
-                        }) );
+                        }));
 
                         break;
 
@@ -137,6 +142,12 @@ namespace ClientSide
             this._User = i.User;
             this._Topics = new Dictionary<string, ClientTopic>();
 
+            this.Form.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                this.Form.Connect();
+            }));
+
+            this.FormUpToDate.WaitOne();
+
             foreach (KeyValuePair<string, Topic> topic in i.TopicsPublic)
             {
                 this.CreateClientTopic(topic.Value);
@@ -155,6 +166,55 @@ namespace ClientSide
             {
                 clientTopic.Value.Terminate();
             }
+        }
+
+
+        public void Inscription(string username, string password, string email)
+        {
+            this.Form.DebugLog.Invoke(new MethodInvoker(delegate {
+                this.Form.DebugLog.PrintDebug(System.Drawing.Color.White, "Trying to sign in as " + username + ":" + password + ":" + email);
+            }));
+
+            ClientCommunication request = new SignIn(username, password, email);
+            Net.SendClientCommunication(this._comm.GetStream(), request);
+
+            ResponseEvent.MyResponseEvent += new ResponseEvent(request, (response) =>
+            {
+
+                switch (response)
+                {
+                    case Success success:
+                        //Si la réponse est Success, alors la création s'est bien effectué
+                        this.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, success.ToString());
+                        }));
+
+                        break;
+
+
+                    case CommunicationException error:
+
+                        this.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, error.Message);
+                        }));
+
+                        break;
+
+
+                    default:
+
+                        this.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while creating new User : " + response);
+                        }));
+
+                        break;
+
+                }
+
+            }).OnResponse;
         }
 
 

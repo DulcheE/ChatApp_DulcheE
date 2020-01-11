@@ -9,7 +9,7 @@ namespace ServerSide
 {
     class Database
     {
-        public static readonly string BasePath = "../../../../database/server/";
+        public static readonly string BasePath = "../../../database/server/";
 
 
         public class UserService

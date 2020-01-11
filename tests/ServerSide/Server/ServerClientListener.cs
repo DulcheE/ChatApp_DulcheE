@@ -217,8 +217,13 @@ namespace ServerSide
         {
             Console.WriteLine(li);
 
+            User user = Database.UserService.getByUsername(li.Username);
+            user.Password = li.Password;
 
-            this._User = Database.UserService.getByUsername(li.Username);
+            Security.TestUser(user);
+
+
+            this._User = user;
 
             UserService.setCookie(ref this._User);
 
@@ -244,7 +249,7 @@ namespace ServerSide
 
             User new_user = Database.UserService.add(si);
 
-            Console.WriteLine("New User `" + new_user.Username + " created !\n");
+            Console.WriteLine("New User `" + new_user.Username + "` created !\n");
             Net.SendServerCommunication(this._connection.GetStream(), new Response(si, new Success("New User `" + new_user.Username + " created !")));
         }
 

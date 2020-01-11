@@ -17,25 +17,29 @@ namespace TestProjectForm.UserCompenent
             InitializeComponent();
         }
 
-
-        public void Add_button1_Click(Action<object, EventArgs> eventOnClick)
-        {
-            this.button1.Click += new System.EventHandler(eventOnClick);
-        }
-
-
-        public void Remove_button1_Click(Action<object, EventArgs> eventOnClick)
-        {
-            this.button1.Click -= new System.EventHandler(eventOnClick);
-        }
-
         private void Content_Connexion_Load(object sender, EventArgs e)
         {
-            this._textBoxConUsername.Init();
-            this._textBoxConPassword.Init();
-            this._textBoxInsUsername.Init();
-            this._textBoxInsPassword.Init();
-            this._textBoxInsEmail.Init();
+            this.textBoxConUsername.Init();
+            this.textBoxConPassword.Init();
+            this.textBoxInsUsername.Init();
+            this.textBoxInsPassword.Init();
+            this.textBoxInsEmail.Init();
+        }
+
+        private void textBoxCon_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.buttonLogIn.PerformClick();
+            }
+        }
+
+        private void textBoxIns_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.buttonSignIn.PerformClick();
+            }
         }
     }
 }

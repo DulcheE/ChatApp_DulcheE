@@ -14,6 +14,7 @@ namespace TestProjectForm
 
 
         private Client _client;
+        private ResponseThread _responseThread;
         private void Form1_Load(object sender, EventArgs e)
         {
             this.DebugLog.Show();
@@ -22,6 +23,10 @@ namespace TestProjectForm
             Thread.CurrentThread.Name = "I/O";
             this._client.Start();
 
+            this._responseThread = new ResponseThread(this._client);
+            Thread t = new Thread(new ThreadStart(this._responseThread.Start));
+            t.Name = "ResponseThread";
+            t.Start();
         }
 
 
@@ -70,19 +75,26 @@ namespace TestProjectForm
         private void content_Connexion1_Load(object sender, EventArgs e)
         {
 
-            this.content_Connexion1.Add_button1_Click((sender_click, e_click) =>
+            this.content_Connexion1.buttonLogIn.Click += (objet, EventArgs) =>
             {
-                this._client.Connection(this.content_Connexion1.textBoxConUsername, this.content_Connexion1.textBoxConPassword);
-            });
+                this._client.Connection(this.content_Connexion1.textBoxConUsername.Text, this.content_Connexion1.textBoxConPassword.Text);
+            };
+
+            this.content_Connexion1.buttonSignIn.Click += (sender_click, e_click) =>
+            {
+                this._client.Inscription(this.content_Connexion1.textBoxInsUsername.Text, this.content_Connexion1.textBoxInsPassword.Text, this.content_Connexion1.textBoxInsEmail.Text);
+            };
         }
 
 
         public void Connect()
         {
-            if(this.content_Connexion1.Visible && !this.content_Connected1.Visible)
+
+            if (this.content_Connexion1.Visible && !this.content_Connected1.Visible)
             {
                 this.SuspendLayout();
                 this.content_Connexion1.Hide();
+                this.content_Connected1.Init(this._client);
                 this.content_Connected1.Show();
                 this.ResumeLayout();
             }
