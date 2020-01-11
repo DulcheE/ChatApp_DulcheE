@@ -133,10 +133,19 @@
   <data name="Border_Right1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Front-UI\Resources\Border_Right1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Border_Left2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Front-UI\Resources\Border_Left2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="OTTER" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Front-UI\Resources\OTTER.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Border_Left2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Front-UI\Resources\Border_Left2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="JoinTopic2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\JoinTopic2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RemoveTopic_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RemoveTopic_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AddTopic2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddTopic2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

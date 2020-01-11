@@ -140,6 +140,7 @@
             this.Controls.Add(this.panelDesc);
             this.Name = "UserMessageChat";
             this.Size = new System.Drawing.Size(772, 253);
+            this.Load += new System.EventHandler(this.UserMessageChat_Load);
             this.panelDesc.ResumeLayout(false);
             this.panelDesc.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);

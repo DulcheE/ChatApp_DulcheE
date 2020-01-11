@@ -147,6 +147,7 @@
             this.buttonChat.TabIndex = 1;
             this.buttonChat.Text = ">";
             this.buttonChat.UseVisualStyleBackColor = true;
+            this.buttonChat.Click += new System.EventHandler(this.buttonChat_Click);
             // 
             // panelContent
             // 

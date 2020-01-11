@@ -109,6 +109,7 @@
             this.Controls.Add(this.panelDesc);
             this.Name = "MyMessageChat";
             this.Size = new System.Drawing.Size(772, 253);
+            this.Load += new System.EventHandler(this.MyMessageChat_Load);
             this.panelDesc.ResumeLayout(false);
             this.panelDesc.PerformLayout();
             this.panelContentMarge.ResumeLayout(false);

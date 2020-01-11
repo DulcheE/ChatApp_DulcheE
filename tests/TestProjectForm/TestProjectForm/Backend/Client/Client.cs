@@ -218,6 +218,108 @@ namespace ClientSide
         }
 
 
+
+
+        public void CreateTopic(string topicName, string password)
+        {
+
+            //We tried to create the Topic
+            ClientCommunication request = new Creation(topicName, this.User, password);
+            Net.SendClientCommunication(this._comm.GetStream(), request);
+            ResponseEvent.MyResponseEvent += new ResponseEvent(request, (response) =>
+            {
+
+                //On écoute la réponse
+
+                switch (response)
+                {
+                    case Topic topic:
+
+                        this.Form.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "New Topic `" + topic.Topic_name + "` created !");
+                            this.Form.content_Connected1.topicFrames[topic.Topic_name].OnSelection(EventArgs.Empty);
+                        }));
+
+                        break;
+
+
+                    case CommunicationException error:
+
+                        this.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, error.Message);
+                        }));
+
+                        break;
+
+
+                    default:
+
+                        this.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while creating Topic : " + response);
+                        }));
+
+                        break;
+                }
+
+            }).OnResponse;
+
+        }
+
+
+        public void JoinTopic(string topicName, string password)
+        {
+            //We tried to join the Topic
+            ClientCommunication request = new Join(this.User, topicName, password);
+
+            Net.SendClientCommunication(_comm.GetStream(), request);
+
+            ResponseEvent.MyResponseEvent += new ResponseEvent(request, (response) =>
+            {
+
+                //On écoute la réponse
+
+                switch (response)
+                {
+                    case Topic topic:
+
+                        //Si la réponse est bien un Topic, alors le join s'est bien effectué
+                        this.Form.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "Connection to the Topic `" + topic.Topic_name + "` ! ");
+                            this.Form.content_Connected1.topicFrames[topic.Topic_name].OnSelection(EventArgs.Empty);
+                        }));
+
+                        break;
+
+
+                    case CommunicationException error:
+
+                        this.Form.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, error.Message);
+                        }));
+
+                        break;
+
+
+                    default:
+
+                        this.Form.Invoke(new MethodInvoker(delegate
+                        {
+                            this.Form.DebugLog.PrintDebug(System.Drawing.Color.Red, "Error while joining Topic : " + response);
+                        }));
+
+                        break;
+                }
+
+            }).OnResponse;
+
+        }
+
+
         /// <summary>
         /// Stop the client and termnate all Threads
         /// </summary>

@@ -34,11 +34,11 @@ namespace TestProjectForm.UserCompenent
             this.tableLayoutPanel_Content = new System.Windows.Forms.TableLayoutPanel();
             this.panelTopic = new System.Windows.Forms.Panel();
             this.panel_topic_list = new System.Windows.Forms.Panel();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.panelUser = new System.Windows.Forms.Panel();
             this.Topic_State_Frame = new TestProjectForm.UserCompenent.Topic_State_Frame();
             this.Profile_Frame = new TestProjectForm.Profile_Frame();
-            this.profile = new TestProjectForm.Front_UI.UserCompenent.Content_Connected.panelContent.Profile();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.profile = new TestProjectForm.UserCompenent.Profile();
+            this.panelUser = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_Content.SuspendLayout();
             this.panelTopic.SuspendLayout();
             this.panelContent.SuspendLayout();
@@ -85,27 +85,6 @@ namespace TestProjectForm.UserCompenent
             this.panel_topic_list.Size = new System.Drawing.Size(236, 442);
             this.panel_topic_list.TabIndex = 10;
             // 
-            // panelContent
-            // 
-            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.panelContent.Controls.Add(this.profile);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(236, 0);
-            this.panelContent.Margin = new System.Windows.Forms.Padding(0);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(710, 596);
-            this.panelContent.TabIndex = 1;
-            // 
-            // panelUser
-            // 
-            this.panelUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            this.panelUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelUser.Location = new System.Drawing.Point(946, 0);
-            this.panelUser.Margin = new System.Windows.Forms.Padding(0);
-            this.panelUser.Name = "panelUser";
-            this.panelUser.Size = new System.Drawing.Size(238, 596);
-            this.panelUser.TabIndex = 2;
-            // 
             // Topic_State_Frame
             // 
             this.Topic_State_Frame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
@@ -113,10 +92,11 @@ namespace TestProjectForm.UserCompenent
             this.Topic_State_Frame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Topic_State_Frame.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Topic_State_Frame.Location = new System.Drawing.Point(0, 519);
-            this.Topic_State_Frame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Topic_State_Frame.Margin = new System.Windows.Forms.Padding(4);
             this.Topic_State_Frame.Name = "Topic_State_Frame";
             this.Topic_State_Frame.Size = new System.Drawing.Size(236, 77);
             this.Topic_State_Frame.TabIndex = 9;
+            this.Topic_State_Frame.Load += new System.EventHandler(this.Topic_State_Frame_Load);
             // 
             // Profile_Frame
             // 
@@ -130,6 +110,17 @@ namespace TestProjectForm.UserCompenent
             this.Profile_Frame.Size = new System.Drawing.Size(236, 77);
             this.Profile_Frame.TabIndex = 8;
             // 
+            // panelContent
+            // 
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.panelContent.Controls.Add(this.profile);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(236, 0);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(0);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Size = new System.Drawing.Size(710, 596);
+            this.panelContent.TabIndex = 1;
+            // 
             // profile
             // 
             this.profile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
@@ -140,6 +131,16 @@ namespace TestProjectForm.UserCompenent
             this.profile.Size = new System.Drawing.Size(710, 596);
             this.profile.TabIndex = 0;
             this.profile.Load += new System.EventHandler(this.profile_Load);
+            // 
+            // panelUser
+            // 
+            this.panelUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            this.panelUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelUser.Location = new System.Drawing.Point(946, 0);
+            this.panelUser.Margin = new System.Windows.Forms.Padding(0);
+            this.panelUser.Name = "panelUser";
+            this.panelUser.Size = new System.Drawing.Size(238, 596);
+            this.panelUser.TabIndex = 2;
             // 
             // Content_Connected
             // 
@@ -166,6 +167,6 @@ namespace TestProjectForm.UserCompenent
         public Profile_Frame Profile_Frame;
         public System.Windows.Forms.Panel panel_topic_list;
         public Topic_State_Frame Topic_State_Frame;
-        private Front_UI.UserCompenent.Content_Connected.panelContent.Profile profile;
+        private UserCompenent.Profile profile;
     }
 }

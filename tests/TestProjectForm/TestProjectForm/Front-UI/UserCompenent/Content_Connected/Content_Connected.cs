@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientSide;
 using Communication.Models;
+using Communication;
 
 namespace TestProjectForm.UserCompenent
 {
@@ -57,12 +58,7 @@ namespace TestProjectForm.UserCompenent
         public void AddTopicFrame(Topic topic)
         {
             TopicChat topicChat = new TopicChat();
-
-            topicChat.labelTopicName.Text = topic.Topic_name;
-            topicChat.labelTopicOwner.Text = topic.Owner.Username;
-
-            if (this._client.User.Username == topic.Owner.Username)
-                topicChat.labelTopicOwner.ForeColor = Color.LightGreen;
+            topicChat.Init(this._client, topic);
 
             this.topicChats.Add(topic.Topic_name, topicChat);
 
@@ -76,6 +72,7 @@ namespace TestProjectForm.UserCompenent
                 this.panelContent.SuspendLayout();
                 this.panelContent.Controls.Clear();
                 this.panelContent.Controls.Add(topicChat);
+                this.Topic_State_Frame.buttonRemove_Init(this._client, this._client.Topics[topic.Topic_name]);
                 this.panelContent.ResumeLayout();
             };
 
@@ -93,5 +90,41 @@ namespace TestProjectForm.UserCompenent
             }));
         }
 
+        private void Topic_State_Frame_Load(object sender, EventArgs e)
+        {
+            this.Topic_State_Frame.buttonAdd.Click += new EventHandler((sender2, e2) =>
+            {
+                this.panelContent.SuspendLayout();
+                this.panelContent.Controls.Clear();
+
+                ContentAddTopic contentAddTopic = new ContentAddTopic();
+                contentAddTopic.labelCaption.Text = "Adding new topic :";
+
+                contentAddTopic.buttonSubmit.Click += new EventHandler((sender3, e3) =>
+                {
+                    this._client.CreateTopic(contentAddTopic.textBoxCustomTopicName.Text, contentAddTopic.textBoxCustomTopicPassword.Text);
+                });
+
+                this.panelContent.Controls.Add(contentAddTopic);
+                this.panelContent.ResumeLayout();
+            });
+
+            this.Topic_State_Frame.buttonJoin.Click += new EventHandler((sender2, e2) =>
+            {
+                this.panelContent.SuspendLayout();
+                this.panelContent.Controls.Clear();
+
+                ContentAddTopic contentAddTopic = new ContentAddTopic();
+                contentAddTopic.labelCaption.Text = "Joining topic :";
+
+                contentAddTopic.buttonSubmit.Click += new EventHandler((sender3, e3) =>
+                {
+                    this._client.JoinTopic(contentAddTopic.textBoxCustomTopicName.Text, contentAddTopic.textBoxCustomTopicPassword.Text);
+                });
+
+                this.panelContent.Controls.Add(contentAddTopic);
+                this.panelContent.ResumeLayout();
+            });
+        }
     }
 }

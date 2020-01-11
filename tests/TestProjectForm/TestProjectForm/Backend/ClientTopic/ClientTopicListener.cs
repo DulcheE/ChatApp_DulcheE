@@ -157,8 +157,6 @@ namespace ClientSide
 
             foreach(KeyValuePair<long, Message> message in topicMessages)
             {
-                this._client.Form.content_Connected1.topicChats[this.Topic.Topic_name].AddMessage(this._client, message.Value);
-
                 printMessage(message.Value);
             }
 
@@ -168,7 +166,11 @@ namespace ClientSide
         private void printMessage(Message message)
         {
             string thread_name = Thread.CurrentThread.Name;
-            if (message.Source is Topic)
+
+            this._client.Form.content_Connected1.topicChats[this.Topic.Topic_name].AddMessage(message);
+
+
+            if (message.Source is Topic) 
                 this._client.Form.DebugLog.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
                     this._client.Form.DebugLog.PrintDebug(System.Drawing.Color.DarkGray, "[" + thread_name + "] " + message.ToString());
                 }));

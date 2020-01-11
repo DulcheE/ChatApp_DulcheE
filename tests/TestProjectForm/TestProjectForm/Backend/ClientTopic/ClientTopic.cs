@@ -26,6 +26,7 @@ namespace ClientSide
             {
                 this._comm = new TcpClient(client.hostname, Topic.Port);
                 string thread_name = Thread.CurrentThread.Name;
+
                 this._client.Form.DebugLog.Invoke(new MethodInvoker(delegate {
                     this._client.Form.DebugLog.PrintDebug(System.Drawing.Color.Green, "[" + thread_name + "] Connection created to `" + client.hostname + "` on port `" + Topic.Port + "` !");
                 }) );

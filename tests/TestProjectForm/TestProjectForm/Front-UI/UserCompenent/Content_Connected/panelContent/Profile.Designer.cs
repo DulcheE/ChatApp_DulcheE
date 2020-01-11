@@ -1,4 +1,4 @@
-﻿namespace TestProjectForm.Front_UI.UserCompenent.Content_Connected.panelContent
+﻿namespace TestProjectForm.UserCompenent
 {
     partial class Profile
     {
@@ -33,8 +33,8 @@
             this.labelUsername = new System.Windows.Forms.Label();
             this.separator = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.labelEmail = new System.Windows.Forms.Label();
             this.panelEmail = new System.Windows.Forms.Panel();
+            this.labelEmail = new System.Windows.Forms.Label();
             this.labelDescEmail = new System.Windows.Forms.Label();
             this.panelUsername.SuspendLayout();
             this.tableLayoutPanelUsername.SuspendLayout();
@@ -101,6 +101,16 @@
             this.panelContent.Size = new System.Drawing.Size(710, 446);
             this.panelContent.TabIndex = 1;
             // 
+            // panelEmail
+            // 
+            this.panelEmail.Controls.Add(this.labelEmail);
+            this.panelEmail.Controls.Add(this.labelDescEmail);
+            this.panelEmail.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEmail.Location = new System.Drawing.Point(100, 50);
+            this.panelEmail.Name = "panelEmail";
+            this.panelEmail.Size = new System.Drawing.Size(510, 100);
+            this.panelEmail.TabIndex = 1;
+            // 
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
@@ -111,16 +121,6 @@
             this.labelEmail.Size = new System.Drawing.Size(75, 28);
             this.labelEmail.TabIndex = 0;
             this.labelEmail.Text = "Email";
-            // 
-            // panelEmail
-            // 
-            this.panelEmail.Controls.Add(this.labelEmail);
-            this.panelEmail.Controls.Add(this.labelDescEmail);
-            this.panelEmail.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEmail.Location = new System.Drawing.Point(100, 50);
-            this.panelEmail.Name = "panelEmail";
-            this.panelEmail.Size = new System.Drawing.Size(510, 100);
-            this.panelEmail.TabIndex = 1;
             // 
             // labelDescEmail
             // 

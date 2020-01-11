@@ -71,6 +71,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Front-UI\ResponseThread.cs" />
+    <Compile Include="Front-UI\UserCompenent\Content_Connected\panelContent\ContentAddTopic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front-UI\UserCompenent\Content_Connected\panelContent\ContentAddTopic.Designer.cs">
+      <DependentUpon>ContentAddTopic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Front-UI\UserCompenent\Content_Connected\Content_Connected.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -135,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Front-UI\UserCompenent\Content_Connected\Content_Connected.resx">
       <DependentUpon>Content_Connected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front-UI\UserCompenent\Content_Connected\panelContent\ContentAddTopic.resx">
+      <DependentUpon>ContentAddTopic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Front-UI\UserCompenent\Content_Connected\panelContent\TopicChat\MyMessageChat.resx">
       <DependentUpon>MyMessageChat.cs</DependentUpon>
@@ -210,6 +219,14 @@
       <Name>Communication</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\JoinTopic2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RemoveTopic_21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddTopic21.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

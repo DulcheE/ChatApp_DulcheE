@@ -22,6 +22,14 @@ namespace TestProjectForm
             base.Dispose(disposing);
         }
 
+
+
+
+        public interface Form1Content { };
+
+
+
+
         #region Code généré par le Concepteur Windows Form
 
         /// <summary>
@@ -258,6 +266,8 @@ namespace TestProjectForm
         private System.Windows.Forms.Label labelAppName;
         private Content_Connexion content_Connexion1;
         public Content_Connected content_Connected1;
+
+        public Form1Content form1Content;
 
         public readonly DebugLog DebugLog = new DebugLog();
     }

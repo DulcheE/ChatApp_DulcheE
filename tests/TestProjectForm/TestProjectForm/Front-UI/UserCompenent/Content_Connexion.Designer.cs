@@ -1,6 +1,6 @@
 ﻿namespace TestProjectForm.UserCompenent
 {
-    partial class Content_Connexion
+    partial class Content_Connexion : Form1.Form1Content
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -33,6 +33,8 @@
             this.tableLayoutPanelConnexion = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBoxConPassword = new TestProjectForm.Composant.TextBoxCustom();
+            this.textBoxConUsername = new TestProjectForm.Composant.TextBoxCustom();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLogIn = new System.Windows.Forms.Button();
             this.tableLayoutPanelInscription = new System.Windows.Forms.TableLayoutPanel();
@@ -40,14 +42,12 @@
             this.buttonSignIn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.separator = new System.Windows.Forms.Label();
-            this.textBoxConPassword = new TestProjectForm.Composant.TextBoxCustom();
-            this.textBoxConUsername = new TestProjectForm.Composant.TextBoxCustom();
             this.textBoxInsUsername = new TestProjectForm.Composant.TextBoxCustom();
             this.textBoxInsPassword = new TestProjectForm.Composant.TextBoxCustom();
             this.textBoxInsEmail = new TestProjectForm.Composant.TextBoxCustom();
+            this.separator = new System.Windows.Forms.Label();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel0.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanelConnexion.SuspendLayout();
@@ -149,6 +149,34 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(405, 204);
             this.tableLayoutPanel4.TabIndex = 1;
+            // 
+            // textBoxConPassword
+            // 
+            this.textBoxConPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this.textBoxConPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxConPassword.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxConPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.textBoxConPassword.Location = new System.Drawing.Point(76, 123);
+            this.textBoxConPassword.Name = "textBoxConPassword";
+            this.textBoxConPassword.PlaceHolder = "Password";
+            this.textBoxConPassword.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.textBoxConPassword.Size = new System.Drawing.Size(251, 32);
+            this.textBoxConPassword.TabIndex = 1;
+            this.textBoxConPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxCon_KeyDown);
+            // 
+            // textBoxConUsername
+            // 
+            this.textBoxConUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
+            this.textBoxConUsername.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxConUsername.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxConUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.textBoxConUsername.Location = new System.Drawing.Point(76, 43);
+            this.textBoxConUsername.Name = "textBoxConUsername";
+            this.textBoxConUsername.PlaceHolder = "Username";
+            this.textBoxConUsername.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.textBoxConUsername.Size = new System.Drawing.Size(251, 32);
+            this.textBoxConUsername.TabIndex = 0;
+            this.textBoxConUsername.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxCon_KeyDown);
             // 
             // tableLayoutPanel6
             // 
@@ -259,73 +287,6 @@
             this.tableLayoutPanel7.Size = new System.Drawing.Size(399, 201);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 3;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel5.Controls.Add(this.label3, 1, 1);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 3;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1178, 172);
-            this.tableLayoutPanel5.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Century Gothic", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.label3.Location = new System.Drawing.Point(356, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(465, 103);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Welcome !";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // separator
-            // 
-            this.separator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.separator.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.separator.Location = new System.Drawing.Point(586, 50);
-            this.separator.Margin = new System.Windows.Forms.Padding(0, 50, 0, 50);
-            this.separator.Name = "separator";
-            this.separator.Size = new System.Drawing.Size(1, 251);
-            this.separator.TabIndex = 2;
-            // 
-            // textBoxConPassword
-            // 
-            this.textBoxConPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.textBoxConPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxConPassword.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.textBoxConPassword.Location = new System.Drawing.Point(76, 123);
-            this.textBoxConPassword.Name = "textBoxConPassword";
-            this.textBoxConPassword.PlaceHolder = "Password";
-            this.textBoxConPassword.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.textBoxConPassword.Size = new System.Drawing.Size(251, 32);
-            this.textBoxConPassword.TabIndex = 1;
-            this.textBoxConPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxCon_KeyDown);
-            // 
-            // textBoxConUsername
-            // 
-            this.textBoxConUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.textBoxConUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxConUsername.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxConUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.textBoxConUsername.Location = new System.Drawing.Point(76, 43);
-            this.textBoxConUsername.Name = "textBoxConUsername";
-            this.textBoxConUsername.PlaceHolder = "Username";
-            this.textBoxConUsername.PlaceHolderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.textBoxConUsername.Size = new System.Drawing.Size(251, 32);
-            this.textBoxConUsername.TabIndex = 0;
-            this.textBoxConUsername.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxCon_KeyDown);
-            // 
             // textBoxInsUsername
             // 
             this.textBoxInsUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
@@ -367,6 +328,45 @@
             this.textBoxInsEmail.Size = new System.Drawing.Size(247, 32);
             this.textBoxInsEmail.TabIndex = 3;
             this.textBoxInsEmail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxIns_KeyDown);
+            // 
+            // separator
+            // 
+            this.separator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.separator.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.separator.Location = new System.Drawing.Point(586, 50);
+            this.separator.Margin = new System.Windows.Forms.Padding(0, 50, 0, 50);
+            this.separator.Name = "separator";
+            this.separator.Size = new System.Drawing.Size(1, 251);
+            this.separator.TabIndex = 2;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel5.Controls.Add(this.label3, 1, 1);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 3;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1178, 172);
+            this.tableLayoutPanel5.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.label3.Location = new System.Drawing.Point(356, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(465, 103);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Welcome !";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Content_Connexion
             // 

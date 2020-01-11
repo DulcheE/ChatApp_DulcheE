@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Communication.Models;
 using ClientSide;
+using Communication;
 
 namespace TestProjectForm
 {
@@ -25,46 +26,80 @@ namespace TestProjectForm
 
 
         private Client _client;
-        private List<MessageChat> messages = new List<MessageChat>();
-        public void AddMessage(Client client, Communication.Models.Message message)
+        private Topic _topic;
+
+        private ClientTopic _clientTopic => this._client.Topics[this._topic.Topic_name];
+
+        public void Init(Client client, Topic topic)
         {
             this._client = client;
+            this._topic = topic;
+
+            this.labelTopicName.Text = this._topic.Topic_name;
+            this.labelTopicOwner.Text = this._topic.Owner.Username;
+
+            if (this._client.User.Username == this._topic.Owner.Username)
+                this.labelTopicOwner.ForeColor = Color.LightGreen;
+
+            this.panelContent.Scroll += new ScrollEventHandler((sender, e) =>
+            {
+                this.panelContent.VerticalScroll.Value = e.NewValue;
+            });
+        }
 
 
+
+        private List<MessageChat> messages = new List<MessageChat>();
+        public void AddMessage(Communication.Models.Message message)
+        {
             this.panelContent.SuspendLayout();
+
+            bool ScrollBottom = false;
+            if (this.panelContent.VerticalScroll.Value >= this.panelContent.VerticalScroll.Maximum - this.panelContent.Height)
+                ScrollBottom = true;
 
             switch (message.Source)
             {
                 case User user:
 
+
                     if(this._client.User.Username == user.Username)
                     {
-                        MyMessageChat mc = new MyMessageChat();
+                        MyMessageChat mmc = new MyMessageChat();
 
-                        mc.Dock = DockStyle.Top;
+                        mmc.Dock = DockStyle.Top;
 
-                        mc.labelDate.Text = message.Upload_date.ToString();
-                        mc.labelMessage.Text = message.Content;
+                        mmc.labelDate.Text = message.Upload_date.ToString();
+                        mmc.labelMessage.Text = message.Content;
 
-                        this.panelContent.Controls.Add(mc);
-                        mc.BringToFront();
+                        this._client.Form.Invoke(new MethodInvoker(delegate
+                        {
+                            this.panelContent.Controls.Add(mmc);
+                        }));
 
-                        this.messages.Add(mc);
+                        mmc.BringToFront();
+
+                        this.messages.Add(mmc);
                     }
                     else
                     {
-                        UserMessageChat mc = new UserMessageChat();
+                        UserMessageChat umc = new UserMessageChat();
 
-                        mc.Dock = DockStyle.Top;
+                        umc.Dock = DockStyle.Top;
 
-                        mc.labelDate.Text = message.Upload_date.ToString();
-                        mc.labelUsername.Text = user.Username;
-                        mc.labelMessage.Text = message.Content;
+                        umc.labelDate.Text = message.Upload_date.ToString();
+                        umc.labelUsername.Text = user.Username;
+                        umc.labelMessage.Text = message.Content;
 
-                        this.panelContent.Controls.Add(mc);
-                        mc.BringToFront();
+                        this._client.Form.Invoke(new MethodInvoker(delegate
+                        {
+                            this.panelContent.Controls.Add(umc);
+                        }));
 
-                        this.messages.Add(mc);
+
+                        umc.BringToFront();
+
+                        this.messages.Add(umc);
                     }
 
                     break;
@@ -75,8 +110,48 @@ namespace TestProjectForm
                     break;
 
             }
-
             this.panelContent.ResumeLayout();
+
+            if (ScrollBottom)
+            {
+                this.panelContent.VerticalScroll.Value = this.panelContent.VerticalScroll.Maximum;
+                this.panelContent.VerticalScroll.Value = this.panelContent.VerticalScroll.Maximum;
+            }
+
+        }
+
+        private void buttonChat_Click(object sender, EventArgs e)
+        {
+
+            this._client.Form.DebugLog.PrintDebug(Color.White, "Sending message to the server...\n");
+
+            this._clientTopic.SendingMessage(this.textBoxChat.Text, (response) =>
+            {
+
+                switch (response)
+                {
+                    case Success s:
+                        this._client.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this._client.Form.DebugLog.PrintDebug(Color.Gray, "I received my own message from the server");
+                        }));
+
+                        break;
+
+
+                    case CommunicationException ce:
+                        this._client.Form.DebugLog.Invoke(new MethodInvoker(delegate
+                        {
+                            this._client.Form.DebugLog.PrintDebug(Color.Red, ce.Message);
+                        }));
+
+                        break;
+
+                }
+
+            });
+
+            this.textBoxChat.Text = string.Empty;
 
         }
     }

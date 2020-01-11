@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TestProjectForm.Front_UI.UserCompenent.Content_Connected.panelContent
+namespace TestProjectForm.UserCompenent
 {
     public partial class Profile : UserControl
     {

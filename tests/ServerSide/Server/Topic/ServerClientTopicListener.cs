@@ -164,7 +164,7 @@ namespace ServerSide
             Security.TestUser(d.Owner, this._user);
 
             //Test if the owner is really the owner of the topic
-            Security.TestOwner(d.Owner, d.Topic);
+            //Security.TestOwner(d.Owner, d.Topic);
 
             TopicService.delete(this._topic);
             Net.SendServerCommunication(this._connection.GetStream(), new Response(d, new Success("Delete of topic success")));

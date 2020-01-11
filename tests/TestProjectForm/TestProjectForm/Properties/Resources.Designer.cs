@@ -63,6 +63,16 @@ namespace TestProjectForm.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddTopic2 {
+            get {
+                object obj = ResourceManager.GetObject("AddTopic2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Border_Left {
             get {
                 object obj = ResourceManager.GetObject("Border_Left", resourceCulture);
@@ -113,6 +123,16 @@ namespace TestProjectForm.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap JoinTopic2 {
+            get {
+                object obj = ResourceManager.GetObject("JoinTopic2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap OTTER {
             get {
                 object obj = ResourceManager.GetObject("OTTER", resourceCulture);
@@ -126,6 +146,16 @@ namespace TestProjectForm.Properties {
         internal static System.Drawing.Bitmap OTTER1 {
             get {
                 object obj = ResourceManager.GetObject("OTTER1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RemoveTopic_2 {
+            get {
+                object obj = ResourceManager.GetObject("RemoveTopic_2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
